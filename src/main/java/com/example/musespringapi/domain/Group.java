@@ -27,9 +27,13 @@ public class Group {
     private String groupName;
 
     /** グループ説明 */
-    @Lob
-    @Column(name = "group_description", columnDefinition = "BLOB")
+    @Column(name = "group_description", columnDefinition = "VARCHAR(255)")
     private String groupDescription;
+
+    /** グループ画像 */
+    @Lob
+    @Column(name = "group_image", columnDefinition = "BLOB")
+    private byte[] groupImage;
     
     /** グループ主催者ID */
     @Column(name = "owner_user_id", columnDefinition = "INT")

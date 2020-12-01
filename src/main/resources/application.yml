@@ -3,4 +3,6 @@ spring:
     url: jdbc:mysql://localhost:3306/muse_db?serverTimezone=JST
     username: root
     password: root
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
