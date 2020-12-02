@@ -10,10 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class GroupService {
+
     
     private final GroupRepository groupRepository;
 
-    public void save(String groupName) {        
+    public void save(String groupName) {
         groupRepository.save(Group.newGroup(groupName));
     }
 }

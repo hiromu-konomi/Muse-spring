@@ -1,6 +1,5 @@
 package com.example.musespringapi.controller;
 
-import com.example.musespringapi.domain.User;
 import com.example.musespringapi.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,9 @@ public class UserController {
 
    @PostMapping("/users")
    @ResponseStatus(HttpStatus.CREATED)
-    public void userPost(@RequestBody User userId) {
-	   System.out.println(userId);
-       userService.insertUserId(userId);
+    public void userPost(@RequestBody String userId) {
+	   System.out.println("userId="+ userId);
+	   
+	   userService.insertUserId(userId);
     }
 }

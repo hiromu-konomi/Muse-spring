@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -19,13 +18,18 @@ import java.util.Date;
 @Table(name="`users`")
 public class User {
 
-    /** 自動採番ID */
-    @Column(name = "user_id", columnDefinition = "INT")
+	/** 自動採番 */
+	@Id
+    @Column(name = "user_num", columnDefinition = "INT)")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Integer userNum;
+	
+	@Column(name = "user_id", columnDefinition = "VARCHAR(225)")
+	private String userId;
+	
 
     /** ユーザー名 */
-    @Column(name = "user_name", columnDefinition = "VARCHAR(45)")
+    @Column(name = "user_name", columnDefinition = "VARCHAR(225)")
     private String userName;
 
 
