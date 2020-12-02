@@ -1,23 +1,27 @@
 package com.example.musespringapi.controller;
 
 import com.example.musespringapi.domain.User;
-import com.example.musespringapi.repository.UserRepository;
+import com.example.musespringapi.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 public class UserController {
     
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public User userPost(@RequestBody User user) {
-        User result = userRepository.save(user);
-        return result;
+   @PostMapping("/users")
+   @ResponseStatus(HttpStatus.CREATED)
+    public void userPost(@RequestBody User userId) {
+	   System.out.println(userId);
+       userService.insertUserId(userId);
     }
 }
