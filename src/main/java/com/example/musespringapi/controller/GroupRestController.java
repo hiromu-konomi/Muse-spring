@@ -1,6 +1,5 @@
 package com.example.musespringapi.controller;
 
-import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.request.GroupRequest;
 import com.example.musespringapi.service.GroupService;
 
@@ -21,8 +20,6 @@ public class GroupRestController {
 
     @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
     public void createGroup(@RequestBody GroupRequest request) {
-        Group group = new Group();
-        group.setGroupName(request.getGroupName());
-        groupService.save(group);
+        groupService.save(request.getGroupName());
     }
 }
