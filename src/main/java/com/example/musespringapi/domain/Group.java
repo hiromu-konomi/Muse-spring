@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name="groups")
+@Table(name="`groups`")
 public class Group {
     
     /** 自動採番ID */
@@ -23,19 +23,25 @@ public class Group {
     private Long groupId;
 
     /** グループ名 */
-    @Column(name = "group_name", columnDefinition = "VARCHAR(45)")
+    @Column(name = "group_name", columnDefinition = "VARCHAR(45)", nullable = true)
     private String groupName;
 
     /** グループ説明 */
-    @Column(name = "group_description", columnDefinition = "VARCHAR(255)")
+    @Column(name = "group_description", columnDefinition = "VARCHAR(255)", nullable = true)
     private String groupDescription;
 
     /** グループ画像 */
     @Lob
-    @Column(name = "group_image", columnDefinition = "BLOB")
+    @Column(name = "group_image", columnDefinition = "BLOB", nullable = true)
     private byte[] groupImage;
     
     /** グループ主催者ID */
-    @Column(name = "owner_user_id", columnDefinition = "INT")
+    @Column(name = "owner_user_id", columnDefinition = "INT", nullable = true)
     private Integer ownerUserId;
+
+    public static Group newGroup(String groupName) {
+        Group group = new Group();
+        group.groupName = groupName;
+        return group;
+    }
 }

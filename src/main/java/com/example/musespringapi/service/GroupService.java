@@ -13,7 +13,7 @@ public class GroupService {
     
     private final GroupRepository groupRepository;
 
-    public void save(Group request) {
-        groupRepository.save(request);
+    public void save(String groupName) {        
+        groupRepository.save(Group.newGroup(groupName));
     }
 }
