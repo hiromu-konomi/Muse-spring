@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    sql-script-encoding: UTF-8
+    url: jdbc:mysql://localhost:3306/muse_db?serverTimezone=JST
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
