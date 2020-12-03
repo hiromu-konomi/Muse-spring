@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -20,6 +19,7 @@ import java.util.Date;
 public class User {
 
     /** 自動採番ID */
+    @Id
     @Column(name = "user_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -27,7 +27,6 @@ public class User {
     /** ユーザー名 */
     @Column(name = "user_name", columnDefinition = "VARCHAR(45)")
     private String userName;
-
 
     /** プロフィール */
     @Column(name = "profile", columnDefinition = "VARCHAR(255)")
