@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GroupService {
 
-    
     private final GroupRepository groupRepository;
 
     public void save(String groupName) {
