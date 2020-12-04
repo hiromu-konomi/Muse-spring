@@ -1,11 +1,15 @@
 package com.example.musespringapi.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -14,9 +18,9 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "musics")
+@Table(name = "`musics`")
 public class Music  {
-    
+
     /** 自動採番ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +42,11 @@ public class Music  {
     @Lob
     @Column(name = "image", columnDefinition = "BLOB")
     private byte[] image;
+
+
+    /** ポストテーブルとの結合 */
+    // @OneToMany(fetch = FetchType.EAGER, mappedBy = "music")
+    // private List<Post> postListWhichMusic;
 
     /** チェックしたユーザーの配列 */
     

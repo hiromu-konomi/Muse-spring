@@ -1,30 +1,36 @@
 package com.example.musespringapi.service;
 
+
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 import com.example.musespringapi.domain.User;
+import com.example.musespringapi.repository.FirebaseRepository;
 import com.example.musespringapi.repository.UserRepository;
 
-
+import java.util.List;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+
+
 	
-	//userIdをinsertする処理
-	public void insertUserId(String userId) {
+
+	private final UserRepository userRepository;
+
+	private final FirebaseRepository firebaseRepository;
+
+	public void insertUserId(String userNum) {
 		User user = new User();
-		user.setUserId(userId);
+		user.setUserNum(userNum);
 		userRepository.save(user);
 	}
+
 	
 	//UserIdの有無を調べる
 	public User findByUserId(String userId){
@@ -38,5 +44,9 @@ public class UserService {
 	//ユーザー情報をインサートする
 	public void insertUser(User user) {
 		userRepository.save(user);
+
+
+	public List<User> findByUserNum(String userNum) {
+		return firebaseRepository.findByUserNum(userNum);
 	}
 }
