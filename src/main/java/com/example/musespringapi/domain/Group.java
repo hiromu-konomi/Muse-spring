@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Table(name="`groups`")
 public class Group {
-    
+
     /** 自動採番ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Group {
     @Lob
     @Column(name = "group_image", columnDefinition = "BLOB")
     private byte[] groupImage;
-    
+
     /** グループ主催者ID */
     @Column(name = "owner_user_id", columnDefinition = "INT")
     private Integer ownerUserId;
