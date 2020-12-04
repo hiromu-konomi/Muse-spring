@@ -1,5 +1,8 @@
 package com.example.musespringapi.service;
 
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -14,16 +17,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+
+
+	
+
 	private final UserRepository userRepository;
 
 	private final FirebaseRepository firebaseRepository;
 
 	public void insertUserId(String userNum) {
-
 		User user = new User();
 		user.setUserNum(userNum);
 		userRepository.save(user);
 	}
+
+	
+	//UserIdの有無を調べる
+	public User findByUserId(String userId){
+		List<User> userList = userRepository.findByUserId(userId);
+		if(userList.isEmpty()) {
+			return null;
+		}
+		return userList.get(0);
+	}
+	
+	//ユーザー情報をインサートする
+	public void insertUser(User user) {
+		userRepository.save(user);
+
 
 	public List<User> findByUserNum(String userNum) {
 		return firebaseRepository.findByUserNum(userNum);
