@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostRestController {
 
-    private PostService postService;
+    private final PostService postService;
 
     @RequestMapping(value = "/tweet", method = RequestMethod.POST)
     public void InsertMusicPost(@RequestBody String artistName, String musicName, String userId, String postText){
