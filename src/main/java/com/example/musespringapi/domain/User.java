@@ -15,23 +15,21 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
-@Table(name="`users`")
+@Table(name = "users")
 public class User {
 
-	/** 自動採番 */
-	@Id
-    @Column(name = "user_num", columnDefinition = "INT)")
+    /** 自動採番 */
+    @Id
+    @Column(name = "user_id", columnDefinition = "INT)")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userNum;
-	
-	@Column(name = "user_id", columnDefinition = "VARCHAR(225)")
-	private String userId;
-	
+    private Integer userId;
+
+    @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
+    private String userNum;
 
     /** ユーザー名 */
     @Column(name = "user_name", columnDefinition = "VARCHAR(225)")
     private String userName;
-
 
     /** プロフィール */
     @Column(name = "profile", columnDefinition = "VARCHAR(255)")
