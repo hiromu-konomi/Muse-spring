@@ -15,9 +15,11 @@ import java.util.List;
 public class UserService {
 
 	private final UserRepository userRepository;
+
 	private final FirebaseRepository firebaseRepository;
 
 	public void insertUserId(String userNum) {
+
 		User user = new User();
 		user.setUserNum(userNum);
 		userRepository.save(user);
