@@ -25,8 +25,8 @@ public class UserService {
 	}
 
 	// UserIdの有無を調べる
-	public User findByUserId(String userId) {
-		List<User> userList = userRepository.findByUserId(userId);
+	public User findByUserId(String userNum) {
+		List<User> userList = userRepository.findByUserNum(userNum);
 		if (userList.isEmpty()) {
 			return null;
 		}

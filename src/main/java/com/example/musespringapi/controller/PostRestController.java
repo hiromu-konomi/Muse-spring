@@ -17,10 +17,10 @@ public class PostRestController {
 
     private final PostService postService;
 
+
     // @RequestMapping(value = "/review", method = RequestMethod.POST)
     // public void InsertMusicPost(@RequestBody String artistName, String musicName,
     // String userId, String postText) {
-
     // System.out.println(artistName);
     // System.out.println(musicName);
     // System.out.println(userId);
