@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -30,18 +29,7 @@ public class Group {
     @Column(name = "group_description", columnDefinition = "VARCHAR(255)")
     private String groupDescription;
 
-    /** グループ画像 */
-    @Lob
-    @Column(name = "group_image", columnDefinition = "BLOB")
-    private byte[] groupImage;
-
-    /** グループ主催者ID */
-    @Column(name = "owner_user_id", columnDefinition = "INT")
-    private Integer ownerUserId;
-
-    public static Group newGroup(String groupName) {
-        Group group = new Group();
-        group.groupName = groupName;
-        return group;
-    }
+    /** グループ管理者ID */
+    @Column(name = "owner_user_id", columnDefinition = "VARCHAR(45)")
+    private String ownerUserId;
 }
