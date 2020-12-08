@@ -15,19 +15,48 @@ public class PostService {
     private final PostRepository postRepository;
     private final MusicRepository musicRepository;
 
-    public void insertPost(String postText, String artistName, String musicName, String userId)  {
+    public void insertMusic(Music music) {
 
-        Post post = new Post();
-        Music music = new Music();
-        Integer postUserId = Integer.valueOf(userId);
+        // Music music = new Music();
+        // Post post = new Post();
+        // music.setArtistName(info.getSearched_artist_name());
+        // music.setMusicName(info.getSearched_song());
+        // music.setImage(info.getSearched_picture());
+        // music.setGenreId(info.getValue());
+        // music.setGenreName(info.getLabel());
 
-        post.setPostText(postText);
-        post.setUserId(postUserId);
-        postRepository.save(post);
+        // music.setArtistName(musics.getSearched_artist_name());
+        // music.setMusicName(musics.getSearched_song());
+        // music.setImage(musics.getSearched_picture());
+        // music.setGenreId(form.getValue());
+        // music.setGenreName(form.getLabel());
 
-        music.setArtistName(artistName);
-        music.setMusicName(musicName);
+        // post.setPostText(form.getReview());
+
         musicRepository.save(music);
+        System.out.println(music);
+    }
+
+    public void insertPost(Post post) {
+
+        // Music music = new Music();
+        // Post post = new Post();
+        // music.setArtistName(info.getSearched_artist_name());
+        // music.setMusicName(info.getSearched_song());
+        // music.setImage(info.getSearched_picture());
+        // music.setGenreId(info.getValue());
+        // music.setGenreName(info.getLabel());
+
+        // music.setArtistName(musics.getSearched_artist_name());
+        // music.setMusicName(musics.getSearched_song());
+        // music.setImage(musics.getSearched_picture());
+        // music.setGenreId(form.getValue());
+        // music.setGenreName(form.getLabel());
+
+        // post.setPostText(form.getReview());
+
+        postRepository.save(post);
+        System.out.println(post);
 
     }
 
