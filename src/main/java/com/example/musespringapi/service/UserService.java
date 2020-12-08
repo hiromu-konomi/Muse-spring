@@ -1,6 +1,5 @@
 package com.example.musespringapi.service;
 
-
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -11,15 +10,9 @@ import com.example.musespringapi.domain.User;
 import com.example.musespringapi.repository.FirebaseRepository;
 import com.example.musespringapi.repository.UserRepository;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
-
-
-	
 
 	private final UserRepository userRepository;
 
@@ -31,20 +24,19 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	
-	//UserIdの有無を調べる
-	public User findByUserId(String userId){
+	// UserIdの有無を調べる
+	public User findByUserId(String userId) {
 		List<User> userList = userRepository.findByUserId(userId);
-		if(userList.isEmpty()) {
+		if (userList.isEmpty()) {
 			return null;
 		}
 		return userList.get(0);
 	}
-	
-	//ユーザー情報をインサートする
+
+	// ユーザー情報をインサートする
 	public void insertUser(User user) {
 		userRepository.save(user);
-
+	}
 
 	public List<User> findByUserNum(String userNum) {
 		return firebaseRepository.findByUserNum(userNum);
