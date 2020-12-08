@@ -3,7 +3,6 @@ package com.example.musespringapi.controller;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.service.UserService;
 
-
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -21,34 +20,34 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
   private final UserService userService;
-   
-   @GetMapping("/users")
-   public User findByUserId(String userNum){
-	   System.out.println(userNum);
-	   User userDetailbyId = userService.findByUserId(userNum);
-	  
-	   return userDetailbyId; 
-	   
-   }
-   
-   @PostMapping("/userDetail")
-   @ResponseStatus(HttpStatus.CREATED)
-   public void addUserDetail (User user) {
-	   System.out.println(user);
-	   userService.insertUser(user);
-   }
+
+  @GetMapping("/users")
+  public User findByUserId(String userNum) {
+    System.out.println(userNum);
+    User userDetailbyId = userService.findByUserId(userNum);
+    return userDetailbyId;
+
+  }
+
+  @PostMapping("/userDetail")
+  @ResponseStatus(HttpStatus.CREATED)
+  public void addUserDetail(@RequestBody User user) {
+
+    userService.insertUser(user);
+  }
 
   @PostMapping("/users")
   @ResponseStatus(HttpStatus.CREATED)
   public void userPost(@RequestBody String userNum) {
-    System.out.println("userId=" + userNum);
 
+    System.out.println("userId=" + userNum);
     userService.insertUserId(userNum);
   }
 
   // @RequestMapping(path = "/postform", method = RequestMethod.GET)
   @GetMapping("/postform")
   public String show(String userNum) {
+
     System.out.println(userNum);
     List<User> userList = userService.findByUserNum(userNum);
 

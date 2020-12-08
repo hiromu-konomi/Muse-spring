@@ -16,7 +16,7 @@ public class PostRestController {
     private final PostService postService;
 
     @RequestMapping(value = "/tweet", method = RequestMethod.POST)
-    public void InsertMusicPost(@RequestBody String artistName, String musicName, String userId, String postText){
+    public void InsertMusicPost(@RequestBody String artistName, String musicName, String userId, String postText) {
 
         System.out.println(artistName);
         System.out.println(musicName);
