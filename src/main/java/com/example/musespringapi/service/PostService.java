@@ -15,7 +15,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MusicRepository musicRepository;
 
-    public void insertPost(String postText, String artistName, String musicName, String userId)  {
+    public void insertPost(String postText, String artistName, String musicName, String userId) {
 
         Post post = new Post();
         Music music = new Music();
