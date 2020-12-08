@@ -10,4 +10,5 @@ import lombok.Setter;
 public class GroupRequest {
     
     private String groupName;
+    private String firebaseId;
 }
