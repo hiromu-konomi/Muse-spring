@@ -22,6 +22,7 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/users")
+
   public User findByUserId(String userNum) {
     System.out.println(userNum);
     User userDetailbyId = userService.findByUserId(userNum);
@@ -48,7 +49,6 @@ public class UserController {
   @GetMapping("/postform")
   public String show(String userNum) {
 
-    System.out.println(userNum);
     List<User> userList = userService.findByUserNum(userNum);
 
     User user = new User();
