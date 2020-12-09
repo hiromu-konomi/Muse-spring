@@ -36,13 +36,15 @@ public class Post {
     private String postText;
 
     // /** ユーザーテーブルとの結合 */
-    // @ManyToOne
-    // @JoinColumn(name = "posts.user_id", referencedColumnName = "users.user_id", insertable = true, updatable = false)
-    // private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
     // /** ミュージックテーブルとの結合 */
-    // @ManyToOne
-    // @JoinColumn(name = "posts.music_id", referencedColumnName = "musics.music_id", insertable = true, updatable = false)
-    // private Music music;
+    // ,referencedColumnName = "musics.music_id", insertable = true, updatable = false
+    @ManyToOne
+    @JoinColumn(name = "music_id", insertable = false, updatable = false)
+    private Music music;
+
 
 }
