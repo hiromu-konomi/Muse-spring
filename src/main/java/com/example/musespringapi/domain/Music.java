@@ -47,9 +47,8 @@ public class Music {
     @Column(name = "post_id", columnDefinition = "INT")
     private Integer postId;
 
-    /** ポストテーブルとの結合 */
-    // @OneToMany(fetch = FetchType.EAGER, mappedBy = "music")
-    // private List<Post> postListWhichMusic;
+    @OneToMany(mappedBy = "user")
+    private List<Post> postListWhomUser;
 
     /** チェックしたユーザーの配列 */
 

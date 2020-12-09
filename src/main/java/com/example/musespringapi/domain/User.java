@@ -44,7 +44,7 @@ public class User {
     private Date hireDate;
 
     /** ポストテーブルとの結合 */
-    // @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    // private List<Post> postListWhomUser;
+    @OneToMany(mappedBy = "music")
+    private List<Post> postListWhichMusic;
 
 }
