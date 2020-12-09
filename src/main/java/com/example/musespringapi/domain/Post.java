@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -17,19 +15,19 @@ import lombok.Setter;
 @Getter
 @Table(name = "posts")
 public class Post {
-    
+
     /** 自動採番ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Integer postId;
 
     /** ユーザーID */
-    @Column(name = "user_id", columnDefinition = "INT")
-    private Integer userId;
+    @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
+    private String userNum;
 
-    /** ミュージックID */
-    @Column(name = "music_id", columnDefinition = "INT")
-    private Integer musicID;
+    // /** ミュージックID */
+    // @Column(name = "music_id", columnDefinition = "INT")
+    // private Integer musicID;
 
     /** 投稿テキスト */
     @Column(name = "post_text", columnDefinition = "VARCHAR(255)")
@@ -45,6 +43,5 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "music_id", insertable = false, updatable = false)
     private Music music;
-
 
 }

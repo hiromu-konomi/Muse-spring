@@ -3,7 +3,6 @@ package com.example.musespringapi.service;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
-
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.repository.MusicRepository;
@@ -19,20 +18,17 @@ public class PostService {
     private final PostRepository postRepository;
     private final MusicRepository musicRepository;
 
-    public void insertPost(String postText, String artistName, String musicName, String userId)  {
-
-        Post post = new Post();
-        Music music = new Music();
-        Integer postUserId = Integer.valueOf(userId);
-
-        post.setPostText(postText);
-        post.setUserId(postUserId);
-        postRepository.save(post);
-
-        music.setArtistName(artistName);
-        music.setMusicName(musicName);
+    public void insertMusic(Music music) {
+        System.out.println(music.getGenreName());
         musicRepository.save(music);
+    }
 
+    public void insertPost(Post post) {
+        postRepository.save(post);
+    }
+
+    public List<Post> findByPostId(String userNum) {
+        return postRepository.findByUserNum(userNum);
     }
 
     // public List<Post> selectPost(String userId) {
