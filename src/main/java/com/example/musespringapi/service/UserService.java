@@ -41,4 +41,9 @@ public class UserService {
 	public List<User> findByUserNum(String userNum) {
 		return firebaseRepository.findByUserNum(userNum);
 	}
+
+	// Firebase の ID をもとにユーザー名を検索
+	public String userNameFindByUserNum(String userNum) {
+		return userRepository.userNameFindByUserNum(userNum);
+	}
 }
