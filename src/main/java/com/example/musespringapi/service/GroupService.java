@@ -17,7 +17,7 @@ public class GroupService {
         groupRepository.save(group);
     }
 
-    public Long newGroupId() {
-        return groupRepository.getMaxId();
+    public Long newGroupId(String userNum) {
+        return groupRepository.getMaxId(userNum);
     }
 }
