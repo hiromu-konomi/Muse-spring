@@ -44,9 +44,8 @@ public class Music  {
     private byte[] image;
 
 
-    /** ポストテーブルとの結合 */
-    // @OneToMany(fetch = FetchType.EAGER, mappedBy = "music")
-    // private List<Post> postListWhichMusic;
+    @OneToMany(mappedBy = "user")
+    private List<Post> postListWhomUser;
 
     /** チェックしたユーザーの配列 */
     
