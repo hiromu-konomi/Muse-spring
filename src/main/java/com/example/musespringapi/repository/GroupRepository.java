@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
     
-    @Query(value = "SELECT MAX(`group_id`) FROM `groups`", nativeQuery = true)
-    Long getMaxId();
+    @Query(value = "SELECT MAX(`group_id`) FROM `groups` WHERE `owner_user_id` = ?1", nativeQuery = true)
+    Long getMaxId(String userNum);
 }
