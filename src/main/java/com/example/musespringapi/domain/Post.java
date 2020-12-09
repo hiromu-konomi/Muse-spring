@@ -19,7 +19,7 @@ public class Post {
     /** 自動採番ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Integer postId;
 
     /** ユーザーID */
     @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
