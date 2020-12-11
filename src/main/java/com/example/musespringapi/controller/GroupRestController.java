@@ -1,12 +1,19 @@
 package com.example.musespringapi.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupMember;
+import com.example.musespringapi.domain.OwnerGroup;
 import com.example.musespringapi.response.GroupResponse;
+import com.example.musespringapi.response.OwnerGroupResponse;
 import com.example.musespringapi.service.GroupMemberService;
 import com.example.musespringapi.service.GroupService;
 import com.example.musespringapi.service.UserService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +38,7 @@ public class GroupRestController {
         insertGroup.setOwnerUserId(userNum);
         groupService.save(insertGroup);
 
-        // group_id を取得して group_member テーブルに INSERT(管理者のみ)
+        // group_id を取得して group_member テーブルに INSERT(作成者のみ)
         Long groupId = groupService.newGroupId(userNum);
         GroupMember insertMember = new GroupMember();
         insertMember.setGroupId(groupId);
@@ -45,5 +52,31 @@ public class GroupRestController {
         String userName = userService.userNameFindByUserNum(userNum);
         response.setOwnerName(userName);
         return response;
+    }
+
+    // Group 画面で「管理しているグループ」が全件 GET されるメソッド
+    @RequestMapping(value = "/showOwnerGroupList", method = RequestMethod.GET)
+    public ResponseEntity<OwnerGroupResponse> showOwnerGroupList (String userNum) {
+
+        List<OwnerGroup> ownerGroups = new ArrayList<>();
+        
+        List<Group> groupList = groupService.ownerGroupList(userNum);
+       
+        for (int j=0; j<groupList.size(); j++) {
+            OwnerGroup group = new OwnerGroup();
+            Long groupId = groupList.get(j).getGroupId();
+            Integer countMember = groupMemberService.countMember(groupId);
+            String groupName = groupList.get(j).getGroupName();
+            group.setGroupId(groupId);
+            group.setCountMember(countMember);
+            group.setGroupName(groupName);
+            ownerGroups.add(group);
+        }
+
+        OwnerGroupResponse response = OwnerGroupResponse.builder()
+        .ownerGroups(ownerGroups)
+        .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
