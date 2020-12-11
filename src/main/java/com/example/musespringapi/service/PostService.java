@@ -35,7 +35,7 @@ public class PostService {
         // post.setPostText(form.getReview());
 
         musicRepository.save(music);
-        System.out.println(music);
+       
     }
 
     public void insertPost(Post post) {
@@ -57,7 +57,7 @@ public class PostService {
         // post.setPostText(form.getReview());
 
         postRepository.save(post);
-        System.out.println(post);
+        
 
     }
 
