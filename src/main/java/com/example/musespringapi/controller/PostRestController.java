@@ -1,11 +1,16 @@
 package com.example.musespringapi.controller;
 
+import java.util.List;
+
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
+import com.example.musespringapi.response.ReviewResponce;
+import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +25,7 @@ public class PostRestController {
 
     private final PostService postService;
 
+    private final PostCardService postCardService;
 
     // @RequestMapping(value = "/review", method = RequestMethod.POST)
     // public void InsertMusicPost(@RequestBody String artistName, String musicName,
@@ -45,6 +51,29 @@ public class PostRestController {
   
         postService.insertMusic(music);
 
+    }
+
+    @GetMapping("/getPostId")
+    public Integer getPostId(String userNum) {
+        List<Post> postIdList = postService.findByPostId(userNum);
+        Integer firstId = postIdList.get(0).getPostId();
+        Integer maxId = 1;
+        for (Post postId : postIdList) {
+            if (firstId < postId.getPostId()) {
+                maxId = postId.getPostId();
+            }
+        }
+        System.out.println(maxId);
+        return maxId;
+    }
+
+    @GetMapping("/getReview")
+    public String getReview(Integer postId) {
+        Post post = postCardService.getReview(postId);
+        ReviewResponce reviewResponce = new ReviewResponce();
+        reviewResponce.setReview(post.getPostText());
+        System.out.println(post.getPostText());
+        return reviewResponce.getReview();
     }
 
 }

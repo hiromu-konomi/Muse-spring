@@ -16,4 +16,8 @@ public class GroupMemberService {
     public void save(GroupMember groupMember) {
         groupMemberRepository.save(groupMember);
     }
+
+    public Integer countMember(Long groupId) {
+        return groupMemberRepository.countMemberFindByGroupId(groupId);
+    }
 }

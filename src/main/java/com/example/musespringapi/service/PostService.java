@@ -1,5 +1,8 @@
 package com.example.musespringapi.service;
 
+import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.repository.MusicRepository;
@@ -15,50 +18,32 @@ public class PostService {
     private final PostRepository postRepository;
     private final MusicRepository musicRepository;
 
-
     public void insertMusic(Music music) {
-
-        // Music music = new Music();
-        // Post post = new Post();
-        // music.setArtistName(info.getSearched_artist_name());
-        // music.setMusicName(info.getSearched_song());
-        // music.setImage(info.getSearched_picture());
-        // music.setGenreId(info.getValue());
-        // music.setGenreName(info.getLabel());
-
-        // music.setArtistName(musics.getSearched_artist_name());
-        // music.setMusicName(musics.getSearched_song());
-        // music.setImage(musics.getSearched_picture());
-        // music.setGenreId(form.getValue());
-        // music.setGenreName(form.getLabel());
-
-        // post.setPostText(form.getReview());
-
+        System.out.println(music.getGenreName());
         musicRepository.save(music);
-       
+
     }
 
     public void insertPost(Post post) {
-
-        // Music music = new Music();
-        // Post post = new Post();
-        // music.setArtistName(info.getSearched_artist_name());
-        // music.setMusicName(info.getSearched_song());
-        // music.setImage(info.getSearched_picture());
-        // music.setGenreId(info.getValue());
-        // music.setGenreName(info.getLabel());
-
-        // music.setArtistName(musics.getSearched_artist_name());
-        // music.setMusicName(musics.getSearched_song());
-        // music.setImage(musics.getSearched_picture());
-        // music.setGenreId(form.getValue());
-        // music.setGenreName(form.getLabel());
-
-        // post.setPostText(form.getReview());
-
         postRepository.save(post);
-        
-
     }
+
+    public List<Post> findByPostId(String userNum) {
+        return postRepository.findByUserNum(userNum);
+    }
+
+    // public List<Post> selectPost(String userId) {
+
+    //     EntityManagerFactory emf = P
+
+    //     List<Post> postLists = entityManager
+    //     .createNativeQuery("SELECT artist_name, music_name, post_text"
+    //     + "FROM posts p INNER JOIN musics m ON p.music_id = m.music_id"
+    //     + "INNER JOIN users u ON p.user_id = u.user_id"
+    //     + "WHERE user_id = :userId", Post.class)
+    //     .setParameter("userId", userId)
+    //     .getResultList();
+
+    // }
 
 }

@@ -1,11 +1,14 @@
 package com.example.musespringapi.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -21,7 +24,7 @@ public class Music {
     @Id
     @Column(name = "music_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long musicId;
+    private Integer musicId;
 
     /** 曲名 */
     @Column(name = "music_name", columnDefinition = "VARCHAR(45)")
@@ -48,9 +51,8 @@ public class Music {
     @Column(name = "post_id", columnDefinition = "INT")
     private Integer postId;
 
-    /** ポストテーブルとの結合 */
-    // @OneToMany(fetch = FetchType.EAGER, mappedBy = "music")
-    // private List<Post> postListWhichMusic;
+    @OneToMany(mappedBy = "user")
+    private List<Post> postListWhomUser;
 
     /** チェックしたユーザーの配列 */
 
