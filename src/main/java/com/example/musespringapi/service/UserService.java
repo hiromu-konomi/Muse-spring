@@ -47,6 +47,7 @@ public class UserService {
 	//入社日が同じ日のユーザー検索
 	public List<User> findByHireDate(Date hireDate){
 		return userRepository.findByHireDate(hireDate);
+	};
 
 
 	// Firebase の ID をもとにユーザー名を検索
