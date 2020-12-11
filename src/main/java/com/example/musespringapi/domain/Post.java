@@ -15,11 +15,12 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "posts")
+@Table(name = "`posts`")
 public class Post {
 
     /** 自動採番ID */
     @Id
+    @Column(name = "post_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
 

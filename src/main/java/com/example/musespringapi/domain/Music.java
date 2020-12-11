@@ -22,6 +22,7 @@ public class Music {
 
     /** 自動採番ID */
     @Id
+    @Column(name = "music_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer musicId;
 

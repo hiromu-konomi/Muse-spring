@@ -21,6 +21,7 @@ public class PostService {
     public void insertMusic(Music music) {
         System.out.println(music.getGenreName());
         musicRepository.save(music);
+
     }
 
     public void insertPost(Post post) {

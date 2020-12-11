@@ -8,11 +8,13 @@ import com.example.musespringapi.response.ReviewResponce;
 import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
 
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.MAX;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -37,17 +39,16 @@ public class PostRestController {
 
     // }
 
-    @RequestMapping(value = "/form", method = RequestMethod.POST)
+    @PostMapping("/form")
+    @ResponseStatus(HttpStatus.CREATED)
     public void InsertMusicPost(@RequestBody Post post) {
 
         postService.insertPost(post);
-        System.out.println(post.getPostText());
-
     }
 
     @RequestMapping(value = "/music", method = RequestMethod.POST)
     public void InsertMusicPost(@RequestBody Music music) {
-
+  
         postService.insertMusic(music);
 
     }

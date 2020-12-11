@@ -3,6 +3,9 @@ package com.example.musespringapi.controller;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.service.UserService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -22,9 +25,9 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/users")
-
   public User findByUserId(String userNum) {
     System.out.println(userNum);
+
     User userDetailbyId = userService.findByUserId(userNum);
     return userDetailbyId;
 
@@ -33,7 +36,7 @@ public class UserController {
   @PostMapping("/userDetail")
   @ResponseStatus(HttpStatus.CREATED)
   public void addUserDetail(@RequestBody User user) {
-
+	System.out.println(user.getHireDate());
     userService.insertUser(user);
   }
 
@@ -44,6 +47,19 @@ public class UserController {
     System.out.println("userId=" + userNum);
     userService.insertUserId(userNum);
   }
+  
+  
+  @GetMapping("/userInfo")
+  public List<User> findByHireDate(String hireDate) throws ParseException{
+	  System.out.println(hireDate);
+	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	  Date date = sdf.parse(hireDate);
+	  System.out.println(date);
+	  List<User> users = userService.findByHireDate(date);
+	  System.out.println(userService.findByHireDate(date));
+	  return users;
+  }
+  
 
   // @RequestMapping(path = "/postform", method = RequestMethod.GET)
   @GetMapping("/postform")

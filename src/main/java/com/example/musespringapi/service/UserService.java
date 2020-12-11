@@ -1,5 +1,6 @@
 package com.example.musespringapi.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -42,8 +43,15 @@ public class UserService {
 		return firebaseRepository.findByUserNum(userNum);
 	}
 
+	
+	//入社日が同じ日のユーザー検索
+	public List<User> findByHireDate(Date hireDate){
+		return userRepository.findByHireDate(hireDate);
+
+
 	// Firebase の ID をもとにユーザー名を検索
 	public String userNameFindByUserNum(String userNum) {
 		return userRepository.userNameFindByUserNum(userNum);
+
 	}
 }
