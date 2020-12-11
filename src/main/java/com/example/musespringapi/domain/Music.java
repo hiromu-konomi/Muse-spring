@@ -19,6 +19,7 @@ public class Music {
 
     /** 自動採番ID */
     @Id
+    @Column(name = "music_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long musicId;
 
@@ -40,8 +41,8 @@ public class Music {
 
     /** 曲イメージ画像 */
     @Lob
-    @Column(name = "image", columnDefinition = "BLOB")
-    private byte[] image;
+    @Column(name = "image", columnDefinition = "VARCHAR(225)")
+    private String image;
 
     /** postId */
     @Column(name = "post_id", columnDefinition = "INT")
