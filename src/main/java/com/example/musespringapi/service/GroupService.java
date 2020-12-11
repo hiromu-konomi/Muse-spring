@@ -1,5 +1,7 @@
 package com.example.musespringapi.service;
 
+import java.util.List;
+
 import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.repository.GroupRepository;
 
@@ -19,5 +21,9 @@ public class GroupService {
 
     public Long newGroupId(String userNum) {
         return groupRepository.getMaxId(userNum);
+    }
+
+    public List<Group> ownerGroupList(String userNum) {
+        return groupRepository.groupList(userNum);
     }
 }
