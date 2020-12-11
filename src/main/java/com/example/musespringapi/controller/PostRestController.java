@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
+import com.example.musespringapi.response.ReviewResponce;
+import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
 
 import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.MAX;
@@ -20,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class PostRestController {
 
     private final PostService postService;
+
+    private final PostCardService postCardService;
 
     // @RequestMapping(value = "/review", method = RequestMethod.POST)
     // public void InsertMusicPost(@RequestBody String artistName, String musicName,
@@ -51,7 +55,6 @@ public class PostRestController {
     @GetMapping("/getPostId")
     public Integer getPostId(String userNum) {
         List<Post> postIdList = postService.findByPostId(userNum);
-        System.out.println(postIdList.get(0).getPostId());
         Integer firstId = postIdList.get(0).getPostId();
         Integer maxId = 1;
         for (Post postId : postIdList) {
@@ -61,6 +64,15 @@ public class PostRestController {
         }
         System.out.println(maxId);
         return maxId;
+    }
+
+    @GetMapping("/getReview")
+    public String getReview(Integer postId) {
+        Post post = postCardService.getReview(postId);
+        ReviewResponce reviewResponce = new ReviewResponce();
+        reviewResponce.setReview(post.getPostText());
+        System.out.println(post.getPostText());
+        return reviewResponce.getReview();
     }
 
 }
