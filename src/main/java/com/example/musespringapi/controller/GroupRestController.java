@@ -54,7 +54,7 @@ public class GroupRestController {
         return response;
     }
 
-    // Group 画面で「管理しているグループ」が全件 GET されるメソッド
+    // 「管理しているグループ」のコンポーネントが表示される際に GET されるメソッド
     @RequestMapping(value = "/showOwnerGroupList", method = RequestMethod.GET)
     public ResponseEntity<OwnerGroupResponse> showOwnerGroupList (String userNum) {
 
