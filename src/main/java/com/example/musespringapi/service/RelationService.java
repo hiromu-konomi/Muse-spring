@@ -22,4 +22,5 @@ public class RelationService {
         return relationRepository.getPostIdFromFollowingUser(followingUser);
     }
 
+
 }
