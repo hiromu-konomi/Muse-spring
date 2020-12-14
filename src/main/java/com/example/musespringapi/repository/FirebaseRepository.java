@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface FirebaseRepository extends JpaRepository<User, String> {
 
     List<User> findByUserNum(String userNum);
+
 }
