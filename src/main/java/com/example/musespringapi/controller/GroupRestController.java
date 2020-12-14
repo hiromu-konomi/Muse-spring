@@ -3,13 +3,16 @@ package com.example.musespringapi.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.musespringapi.domain.FollowUserGrpSts;
 import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupMember;
 import com.example.musespringapi.domain.OwnerGroup;
+import com.example.musespringapi.response.FollowUsersGrpStsResponse;
 import com.example.musespringapi.response.GroupResponse;
 import com.example.musespringapi.response.OwnerGroupResponse;
 import com.example.musespringapi.service.GroupMemberService;
 import com.example.musespringapi.service.GroupService;
+import com.example.musespringapi.service.RelationService;
 import com.example.musespringapi.service.UserService;
 
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,7 @@ public class GroupRestController {
 
     private final GroupService groupService;
     private final GroupMemberService groupMemberService;
+    private final RelationService relationService;
     private final UserService userService;
 
     // グループを新規作成した際に GET されるメソッド
@@ -43,14 +47,15 @@ public class GroupRestController {
         GroupMember insertMember = new GroupMember();
         insertMember.setGroupId(groupId);
         insertMember.setUserNum(userNum);
+        insertMember.setJoinStatus(1);
         groupMemberService.save(insertMember);
 
         // グループ詳細画面に表示するグループデータを取得して返す
         GroupResponse response = new GroupResponse();
         response.setGroupId(groupId);
         response.setGroupName(groupName);
-        String userName = userService.userNameFindByUserNum(userNum);
-        response.setOwnerName(userName);
+        response.setOwnerId(userNum);
+        response.setJoinSatus(1);
         return response;
     }
 
@@ -78,6 +83,31 @@ public class GroupRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
 
             }
+    }
+
+    // グループに招待するユーザーを選択するダイアログが表示される際に GET されるメソッド
+    @RequestMapping(value = "flwUserListAndJoinSts", method = RequestMethod.GET)
+    public ResponseEntity<FollowUsersGrpStsResponse> flwUserListAndJoinSts (String userNum, Long groupId) {
+
+        List<FollowUserGrpSts> followUsers = new ArrayList<>();
+
+        List<String> followingUserList = relationService.getFollowingUserNum(userNum);
+
+        for (String flwUserNum : followingUserList) {
+            FollowUserGrpSts user = new FollowUserGrpSts();
+            String userName = userService.userNameFindByUserNum(flwUserNum);
+            Integer joinStatus = groupMemberService.getJoinStatus(flwUserNum, groupId);
+            user.setUserNum(flwUserNum);
+            user.setUserName(userName);
+            user.setJoinStatus(joinStatus);
+            followUsers.add(user);
+        }
+
+        FollowUsersGrpStsResponse response = FollowUsersGrpStsResponse.builder()
+        .followUsers(followUsers)
+        .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
 
 

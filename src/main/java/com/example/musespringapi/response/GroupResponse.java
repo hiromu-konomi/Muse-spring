@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GroupResponse {
-    
     private Long groupId;
     private String groupName;
-    private String ownerName;
+    private String ownerId;
+    private Integer joinSatus;
 }
