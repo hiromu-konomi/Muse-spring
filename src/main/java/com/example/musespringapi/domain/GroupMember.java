@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Table(name = "`group_member`")
 public class GroupMember {
-    
+
     /** 自動採番ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
