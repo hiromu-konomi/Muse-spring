@@ -49,7 +49,7 @@ public class PostRestController {
 
     @RequestMapping(value = "/music", method = RequestMethod.POST)
     public void InsertMusicPost(@RequestBody Music music) {
-  
+
         postService.insertMusic(music);
 
     }
@@ -75,6 +75,7 @@ public class PostRestController {
         reviewResponce.setReview(post.getPostText());
         System.out.println(post.getPostText());
         return reviewResponce.getReview();
+
     }
 
 }
