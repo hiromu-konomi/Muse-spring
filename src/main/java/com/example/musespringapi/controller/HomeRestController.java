@@ -8,6 +8,7 @@ import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.response.MusicResponce;
 import com.example.musespringapi.response.PostResponce;
 import com.example.musespringapi.service.PostCardService;
+import com.example.musespringapi.service.PostService;
 import com.example.musespringapi.service.RelationService;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class HomeRestController {
 
     private final PostCardService postCardService;
     private final RelationService relationService;
+    private final PostService postService;
 
     @GetMapping("/getMusicInfo")
     public MusicResponce getMusicInfo(Integer postId) {
@@ -42,7 +44,7 @@ public class HomeRestController {
         List<String> followingUserList = relationService.getFollowingUserNum(userNum);
         List<Integer> postIdAllList = new ArrayList<>();
         for (String followingUserNum : followingUserList) {
-            List<Integer> postIdList = relationService.getPostIdFromFollowingUser(followingUserNum);
+            List<Integer> postIdList = postService.getPostIdFromFollowingUser(followingUserNum);
             for (Integer postId : postIdList) {
                 postIdAllList.add(postId);
             }
