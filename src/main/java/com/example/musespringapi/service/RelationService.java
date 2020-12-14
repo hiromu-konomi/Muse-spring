@@ -18,8 +18,10 @@ public class RelationService {
         return relationRepository.getFollowingUserNum(userNum);
     }
 
+
     // public List<Integer> getPostIdFromFollowingUser(String followingUser) {
     // return relationRepository.getPostIdFromFollowingUser(followingUser);
     // }
+
 
 }

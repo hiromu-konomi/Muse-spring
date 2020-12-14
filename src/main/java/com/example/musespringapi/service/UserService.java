@@ -53,6 +53,5 @@ public class UserService {
 	// Firebase の ID をもとにユーザー名を検索
 	public String userNameFindByUserNum(String userNum) {
 		return userRepository.userNameFindByUserNum(userNum);
-
 	}
 }
