@@ -51,8 +51,8 @@ public class Music {
     @Column(name = "post_id", columnDefinition = "INT")
     private Integer postId;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> postListWhomUser;
+    // @OneToMany(mappedBy = "user")
+    // private List<Post> postListWhomUser;
 
     /** チェックしたユーザーの配列 */
 
