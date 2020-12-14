@@ -81,8 +81,6 @@ public class GroupRestController {
         OwnerGroupResponse response = OwnerGroupResponse.builder().ownerGroups(ownerGroups).build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-
-            }
     }
 
     // グループに招待するユーザーを選択するダイアログが表示される際に GET されるメソッド
