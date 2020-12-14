@@ -32,17 +32,21 @@ public class PostService {
         return postRepository.findByUserNum(userNum);
     }
 
+    public List<Integer> getPostIdFromFollowingUser(String followingUser) {
+        return postRepository.getPostIdFromFollowingUser(followingUser);
+    }
+
     // public List<Post> selectPost(String userId) {
 
-    //     EntityManagerFactory emf = P
+    // EntityManagerFactory emf = P
 
-    //     List<Post> postLists = entityManager
-    //     .createNativeQuery("SELECT artist_name, music_name, post_text"
-    //     + "FROM posts p INNER JOIN musics m ON p.music_id = m.music_id"
-    //     + "INNER JOIN users u ON p.user_id = u.user_id"
-    //     + "WHERE user_id = :userId", Post.class)
-    //     .setParameter("userId", userId)
-    //     .getResultList();
+    // List<Post> postLists = entityManager
+    // .createNativeQuery("SELECT artist_name, music_name, post_text"
+    // + "FROM posts p INNER JOIN musics m ON p.music_id = m.music_id"
+    // + "INNER JOIN users u ON p.user_id = u.user_id"
+    // + "WHERE user_id = :userId", Post.class)
+    // .setParameter("userId", userId)
+    // .getResultList();
 
     // }
 

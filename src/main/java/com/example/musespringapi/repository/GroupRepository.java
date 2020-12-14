@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
-    
+
     // 作成したグループのIDを取得する（作成者のFirebaseIDをもとにgroup_idの最大値を取得）
     @Query(value = "SELECT MAX(`group_id`) FROM `groups` WHERE `owner_user_id` = ?1", nativeQuery = true)
     Long getMaxId(String userNum);
