@@ -30,7 +30,7 @@ public class GroupRestController {
 
     // グループを新規作成した際に GET されるメソッド
     @RequestMapping(value = "/showGroup", method = RequestMethod.GET)
-    public GroupResponse showGroup (String groupName, String userNum) {
+    public GroupResponse showGroup(String groupName, String userNum) {
 
         // groups テーブルに INSERT
         Group insertGroup = new Group();
@@ -56,13 +56,13 @@ public class GroupRestController {
 
     // 「管理しているグループ」のコンポーネントが表示される際に GET されるメソッド
     @RequestMapping(value = "/showOwnerGroupList", method = RequestMethod.GET)
-    public ResponseEntity<OwnerGroupResponse> showOwnerGroupList (String userNum) {
+    public ResponseEntity<OwnerGroupResponse> showOwnerGroupList(String userNum) {
 
         List<OwnerGroup> ownerGroups = new ArrayList<>();
-        
+
         List<Group> groupList = groupService.ownerGroupList(userNum);
-       
-        for (int j=0; j<groupList.size(); j++) {
+
+        for (int j = 0; j < groupList.size(); j++) {
             OwnerGroup group = new OwnerGroup();
             Long groupId = groupList.get(j).getGroupId();
             Integer countMember = groupMemberService.countMember(groupId);
@@ -73,10 +73,14 @@ public class GroupRestController {
             ownerGroups.add(group);
         }
 
-        OwnerGroupResponse response = OwnerGroupResponse.builder()
-        .ownerGroups(ownerGroups)
-        .build();
+        OwnerGroupResponse response = OwnerGroupResponse.builder().ownerGroups(ownerGroups).build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
+            }
 }
+
+
+        
+
+            
