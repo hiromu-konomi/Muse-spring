@@ -19,8 +19,8 @@ public class RelationService {
     private final RelationRepository relationRepository;
     private final UserRepository userRepository;
 
-    public List<String> getFollowingUserNum(String userNum) {
-        return relationRepository.getFollowingUserNum(userNum);
+    public List<String> getFollowerUserNum(String userNum) {
+        return relationRepository.getFollowerUserNum(userNum);
     }
 
 
