@@ -119,9 +119,9 @@ public class GroupRestController {
 
         List<FollowUserGrpSts> followUsers = new ArrayList<>();
 
-        List<String> followingUserList = relationService.getFollowingUserNum(userNum);
+        List<String> followerUserList = relationService.getFollowerUserNum(userNum);
 
-        for (String flwUserNum : followingUserList) {
+        for (String flwUserNum : followerUserList) {
             FollowUserGrpSts user = new FollowUserGrpSts();
             String userName = userService.userNameFindByUserNum(flwUserNum);
             Integer joinStatus = groupMemberService.getJoinStatus(flwUserNum, groupId);
