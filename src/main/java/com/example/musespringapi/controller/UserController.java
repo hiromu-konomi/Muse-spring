@@ -5,6 +5,7 @@ import com.example.musespringapi.service.UserService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,15 +50,34 @@ public class UserController {
   }
   
   
+  //入社日で表示する
   @GetMapping("/userInfo")
-  public List<User> findByHireDate(String hireDate) throws ParseException{
-	  System.out.println(hireDate);
-	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	  Date date = sdf.parse(hireDate);
-	  System.out.println(date);
-	  List<User> users = userService.findByHireDate(date);
-	  System.out.println(userService.findByHireDate(date));
-	  return users;
+  public List<User> findByHireDate(String userNum) {
+	  
+	  User user = userService.findByUserId(userNum);
+	  List<User> userList = new ArrayList<User>();
+	  
+	  if(user == null) {
+		  return null;
+	  } else {
+		  List<User> userListByHireDate = userService.findByHireDate(user.getHireDate());
+		  
+		  if(userListByHireDate == null) {
+			  return null;
+		  } else {
+			  for(User users : userListByHireDate) {
+				  System.out.println(users.getUserNum());
+				  System.out.println(userNum);
+				  if(!(users.getUserNum().equals(userNum))) {
+					  userList.add(users);
+				  }
+			  }
+		  }
+	  }
+	  
+	  System.out.println(userList.size());
+
+	  return userList;
   }
   
 
