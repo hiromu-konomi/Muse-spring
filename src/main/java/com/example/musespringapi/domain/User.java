@@ -40,7 +40,7 @@ public class User {
     /** 部署ID */
     @Column(name = "dep_name", columnDefinition = "VARCHAR(255)")
     private String depName;
-
+    
     /** 入社年月 */
     @Column(name = "hire_date", columnDefinition = "DATE")
     private Date hireDate;
