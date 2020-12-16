@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MusicRepository extends JpaRepository<Music, Integer> {
 
-    Music findByPostId(Integer postId);
-  
-    //musicNameをもとにmusicId,MusicName,artistNameを検索
+    // postIdからmusicの情報を取ってくる処理
+    @Query(value = "SELECT * FROM `musics` WHERE `post_id` = ?1", nativeQuery = true)
+    Music getMusicInfo(Integer postId);
+
+    // musicNameをもとにmusicId,MusicName,artistNameを検索
     @Query(value = "SELECT * FROM `musics` WHERE `artist_name` LIKE %?1%", nativeQuery = true)
     List<Music> findByArtistNameStartsWith(String searchPost);
 
