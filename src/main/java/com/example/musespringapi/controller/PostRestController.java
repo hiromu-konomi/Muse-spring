@@ -56,7 +56,7 @@ public class PostRestController {
 
     @GetMapping("/getPostId")
     public Integer getPostId(String userNum) {
-        List<Post> postIdList = postService.findByPostId(userNum);
+        List<Post> postIdList = postService.findByUserNum(userNum);
         Integer firstId = postIdList.get(0).getPostId();
         Integer maxId = 1;
         for (Post postId : postIdList) {
@@ -66,16 +66,6 @@ public class PostRestController {
         }
         System.out.println(maxId);
         return maxId;
-    }
-
-    @GetMapping("/getReview")
-    public String getReview(Integer postId) {
-        Post post = postCardService.getReview(postId);
-        ReviewResponce reviewResponce = new ReviewResponce();
-        reviewResponce.setReview(post.getPostText());
-        System.out.println(post.getPostText());
-        return reviewResponce.getReview();
-
     }
 
 }
