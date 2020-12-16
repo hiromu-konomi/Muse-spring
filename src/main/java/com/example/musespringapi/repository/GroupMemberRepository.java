@@ -1,5 +1,7 @@
 package com.example.musespringapi.repository;
 
+import java.util.List;
+
 import com.example.musespringapi.domain.GroupMember;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +18,8 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> 
     // ユーザーのグループ参加状況を取得するメソッド
     @Query(value = "SELECT `join_status` FROM `group_member` WHERE `user_num` = ?1 AND `group_id` = ?2", nativeQuery = true)
     Integer statusFindbyUserNumAndGroupId(String userNum, Long groupId);
+
+    // ユーザーが参加しているグループを全件取得するメソッド
+    @Query(value = "SELECT `group_id` FROM `group_member` WHERE `user_num` = ?1", nativeQuery = true)
+    List<Long> findByUserNum(String userNum);
 }
