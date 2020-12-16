@@ -1,5 +1,6 @@
 package com.example.musespringapi.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class UserService {
 	// UserIdの有無を調べる
 	public User findByUserId(String userNum) {
 		List<User> userList = userRepository.findByUserNum(userNum);
+		
 		if (userList.isEmpty()) {
 			return null;
 		}
@@ -40,12 +42,24 @@ public class UserService {
 	}
 
 	public List<User> findByUserNum(String userNum) {
-		return firebaseRepository.findByUserNum(userNum);
+		List<User> userList = firebaseRepository.findByUserNum(userNum);
+		
+		if(userList.isEmpty()) {
+			return null;
+		}
+		
+		return userList;
 	}
-
-	// 入社日が同じ日のユーザー検索
-	public List<User> findByHireDate(Date hireDate) {
-		return userRepository.findByHireDate(hireDate);
+	
+	//入社日が同じ日のユーザー検索
+	public List<User> findByHireDate(Date hireDate){
+		List<User> userList = userRepository.findByHireDate(hireDate);
+		
+		if(userList.isEmpty()) {
+			System.out.println("null");
+			return null;
+		} 
+		return userList; 
 	};
 
 	// Firebase の ID をもとにユーザー名を検索

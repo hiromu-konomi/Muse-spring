@@ -26,4 +26,8 @@ public class GroupService {
     public List<Group> ownerGroupList(String userNum) {
         return groupRepository.groupList(userNum);
     }
+
+    public Group findByGroupId(Long groupId) {
+        return groupRepository.getOne(groupId);
+    }
 }
