@@ -34,11 +34,11 @@ public class User {
     private String userName;
 
     /** プロフィール */
-    @Column(name = "profile", columnDefinition = "VARCHAR(255)")
+    @Column(name = "profile", columnDefinition = "VARCHAR(225)")
     private String profile;
 
     /** 部署ID */
-    @Column(name = "dep_name", columnDefinition = "VARCHAR(255)")
+    @Column(name = "dep_name", columnDefinition = "VARCHAR(225)")
     private String depName;
     
     /** 入社年月 */
