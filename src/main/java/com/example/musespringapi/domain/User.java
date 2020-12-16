@@ -38,8 +38,8 @@ public class User {
     private String profile;
 
     /** 部署ID */
-    @Column(name = "dep_id", columnDefinition = "INT")
-    private Integer depId;
+    @Column(name = "dep_name", columnDefinition = "VARCHAR(255)")
+    private String depName;
 
     /** 入社年月 */
     @Column(name = "hire_date", columnDefinition = "DATE")
