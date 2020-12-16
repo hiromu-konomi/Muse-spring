@@ -28,11 +28,11 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<Post> findByPostId(String userNum) {
+    public List<Post> findByUserNum(String userNum) {
         return postRepository.findByUserNum(userNum);
     }
 
-    public List<Integer> getPostIdFromFollowingUser(String followingUser) {
+    public List<Post> getPostIdFromFollowingUser(String followingUser) {
         return postRepository.getPostIdFromFollowingUser(followingUser);
     }
 

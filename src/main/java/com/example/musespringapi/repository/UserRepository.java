@@ -20,6 +20,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(value = "SELECT `user_name` FROM `users` WHERE `user_num` = ?1", nativeQuery = true)
 	String userNameFindByUserNum(String userNum);
 
+
+	@Query(value = "SELECT * FROM `users` WHERE `user_num` = ?1", nativeQuery = true)
+	User userNameList(String userNum);
+
 	//userIdよりuserNameを取得
 	@Query(value = "SELECT * FROM `users` WHERE `user_num` = ?1", nativeQuery = true)
 	User getUserNameByUserId(Integer userId);

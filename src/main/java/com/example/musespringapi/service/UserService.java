@@ -50,7 +50,6 @@ public class UserService {
 		
 		return userList;
 	}
-
 	
 	//入社日が同じ日のユーザー検索
 	public List<User> findByHireDate(Date hireDate){
@@ -63,9 +62,12 @@ public class UserService {
 		return userList; 
 	};
 
-
 	// Firebase の ID をもとにユーザー名を検索
 	public String userNameFindByUserNum(String userNum) {
 		return userRepository.userNameFindByUserNum(userNum);
+	}
+
+	public User userName(String userNum) {
+		return userRepository.userNameList(userNum);
 	}
 }

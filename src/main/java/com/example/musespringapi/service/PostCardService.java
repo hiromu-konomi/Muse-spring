@@ -18,10 +18,10 @@ public class PostCardService {
     private final PostRepository postRepository;
 
     public Music findByPostId(Integer postId) {
-        return musicRepository.findByPostId(postId);
+        return musicRepository.getMusicInfo(postId);
     }
 
-    public Post getReview(Integer postId) {
+    public List<Post> getReview(Integer postId) {
         return postRepository.findByPostId(postId);
     }
 
