@@ -43,15 +43,17 @@ public class UserService {
 		return firebaseRepository.findByUserNum(userNum);
 	}
 
-	
-	//入社日が同じ日のユーザー検索
-	public List<User> findByHireDate(Date hireDate){
+	// 入社日が同じ日のユーザー検索
+	public List<User> findByHireDate(Date hireDate) {
 		return userRepository.findByHireDate(hireDate);
 	};
-
 
 	// Firebase の ID をもとにユーザー名を検索
 	public String userNameFindByUserNum(String userNum) {
 		return userRepository.userNameFindByUserNum(userNum);
+	}
+
+	public User userName(String userNum) {
+		return userRepository.userNameList(userNum);
 	}
 }
