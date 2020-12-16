@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RelationRepository extends JpaRepository<Relation, Integer> {
 
-    @Query(value = "SELECT `following_user_num` FROM `relation` WHERE `follower_user_num` = ?1", nativeQuery = true)
-    List<String> getFollowingUserNum(String userNum);
+    @Query(value = "SELECT `follower_user_num` FROM `relation` WHERE `following_user_num` = ?1", nativeQuery = true)
+    List<String> getFollowerUserNum(String userNum);
     
 //    //フォロー解除した時の処理をするため
 //    List<Relation> findByFollowingUserNum(String followingUserNum);
