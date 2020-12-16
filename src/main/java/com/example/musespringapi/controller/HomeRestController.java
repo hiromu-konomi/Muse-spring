@@ -34,7 +34,7 @@ public class HomeRestController {
 
     @GetMapping("/getMusicInfoAndReview")
     public ResponseEntity<PostResponce> getMusicInfo(String userNum) {
-        List<String> followingUserList = relationService.getFollowingUserNum(userNum);
+        List<String> followingUserList = relationService.getFollowerUserNum(userNum);
         followingUserList.add(userNum);
         List<ShowReview> reviewList = new ArrayList<>();
         List<Post> postIdAllList = new ArrayList<>();
