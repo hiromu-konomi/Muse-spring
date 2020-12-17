@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> findByHireDate(Date hireDate);
 
-	// Firebase の ID をもとにユーザー名を検索
+	// userNumをもとにユーザー名を検索
 	@Query(value = "SELECT `user_name` FROM `users` WHERE `user_num` = ?1", nativeQuery = true)
 	String userNameFindByUserNum(String userNum);
 
@@ -27,5 +27,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	//userIdよりuserNameを取得
 	@Query(value = "SELECT * FROM `users` WHERE `user_num` = ?1", nativeQuery = true)
 	User getUserNameByUserId(Integer userId);
+
+	// userNumとuserNameの曖昧検索をもとにユーザーを取得
+	@Query(value = "SELECT * FROM `users` WHERE `user_num` = ?1 AND `user_name` LIKE %?2%", nativeQuery = true)
+	User findByUserNumAndSearchWord(String userNum, String searchWord);
 
 }
