@@ -117,30 +117,6 @@ public class GroupRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // グループに招待するユーザーを選択するダイアログが表示される際に GET されるメソッド
-    @RequestMapping(value = "/flwUserListAndJoinSts", method = RequestMethod.GET)
-    public ResponseEntity<FollowUsersGrpStsResponse> flwUserListAndJoinSts (String userNum, Long groupId) {
-
-        List<FollowUserGrpSts> followUsers = new ArrayList<>();
-
-        List<String> followerUserList = relationService.getFollowerUserNum(userNum);
-
-        for (String flwUserNum : followerUserList) {
-            FollowUserGrpSts user = new FollowUserGrpSts();
-            String userName = userService.userNameFindByUserNum(flwUserNum);
-            Integer joinStatus = groupMemberService.getJoinStatus(flwUserNum, groupId);
-            user.setUserNum(flwUserNum);
-            user.setUserName(userName);
-            user.setJoinStatus(joinStatus);
-            followUsers.add(user);
-        }
-
-        FollowUsersGrpStsResponse response = FollowUsersGrpStsResponse.builder()
-        .followUsers(followUsers)
-        .build();
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     // 「管理しているグループ」が検索された際に GET されるメソッド
     @RequestMapping(value = "/showOwnGrpsBySearch", method = RequestMethod.GET)
     public ResponseEntity<OwnerGroupResponse> showOwnGrpsBySearch(String userNum, String searchWord) {
@@ -191,9 +167,28 @@ public class GroupRestController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    // グループに招待するユーザーを選択するダイアログが表示される際に GET されるメソッド
+    @RequestMapping(value = "/flwUserListAndJoinSts", method = RequestMethod.GET)
+    public ResponseEntity<FollowUsersGrpStsResponse> flwUserListAndJoinSts (String userNum, Long groupId) {
+
+        List<FollowUserGrpSts> followUsers = new ArrayList<>();
+
+        List<String> followerUserList = relationService.getFollowerUserNum(userNum);
+
+        for (String flwUserNum : followerUserList) {
+            FollowUserGrpSts user = new FollowUserGrpSts();
+            String userName = userService.userNameFindByUserNum(flwUserNum);
+            Integer joinStatus = groupMemberService.getJoinStatus(flwUserNum, groupId);
+            user.setUserNum(flwUserNum);
+            user.setUserName(userName);
+            user.setJoinStatus(joinStatus);
+            followUsers.add(user);
+        }
+
+        FollowUsersGrpStsResponse response = FollowUsersGrpStsResponse.builder()
+        .followUsers(followUsers)
+        .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
-
-
-        
-
-            
