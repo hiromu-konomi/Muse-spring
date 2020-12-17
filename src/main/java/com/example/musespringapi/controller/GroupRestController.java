@@ -2,6 +2,7 @@ package com.example.musespringapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.musespringapi.domain.FollowUserGrpSts;
 import com.example.musespringapi.domain.Group;
@@ -95,6 +96,9 @@ public class GroupRestController {
 
         for (Long groupId : groupIds) {
             Group group = groupService.findByGroupId(groupId);
+            if (Objects.isNull(group)) {
+                continue;
+            }
             String ownerNum = group.getOwnerUserId();
             //自分が管理しているグループを表示させない為の条件分岐
             if (ownerNum.equals(userNum)) {
@@ -114,7 +118,7 @@ public class GroupRestController {
     }
 
     // グループに招待するユーザーを選択するダイアログが表示される際に GET されるメソッド
-    @RequestMapping(value = "flwUserListAndJoinSts", method = RequestMethod.GET)
+    @RequestMapping(value = "/flwUserListAndJoinSts", method = RequestMethod.GET)
     public ResponseEntity<FollowUsersGrpStsResponse> flwUserListAndJoinSts (String userNum, Long groupId) {
 
         List<FollowUserGrpSts> followUsers = new ArrayList<>();
@@ -134,6 +138,57 @@ public class GroupRestController {
         FollowUsersGrpStsResponse response = FollowUsersGrpStsResponse.builder()
         .followUsers(followUsers)
         .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 「管理しているグループ」が検索された際に GET されるメソッド
+    @RequestMapping(value = "/showOwnGrpsBySearch", method = RequestMethod.GET)
+    public ResponseEntity<OwnerGroupResponse> showOwnGrpsBySearch(String userNum, String searchWord) {
+
+        List<OwnerGroup> ownerGroups = new ArrayList<>();
+
+        List<Group> groupList = groupService.ownerGroupListByWord(userNum, searchWord);
+
+        for (int j = 0; j < groupList.size(); j++) {
+            OwnerGroup group = new OwnerGroup();
+            Long groupId = groupList.get(j).getGroupId();
+            String groupName = groupList.get(j).getGroupName();
+            group.setGroupId(groupId);
+            group.setGroupName(groupName);
+            ownerGroups.add(group);
+        }
+
+        OwnerGroupResponse response = OwnerGroupResponse.builder().ownerGroups(ownerGroups).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 「参加しているグループ」が検索された際に GET されるメソッド
+    @RequestMapping(value = "/showJoinGrpsBySearch", method = RequestMethod.GET)
+    public ResponseEntity<JoinGroupResponse> showJoinGrpsBySearch(String userNum, String searchWord) {
+
+        List<JoinGroup> joinGroups = new ArrayList<>();
+
+        List<Long> groupIds = groupMemberService.findByUserNum(userNum);
+
+        for (Long groupId : groupIds) {
+            Group group = groupService.findByIdAndSearchWord(groupId, searchWord);
+            if (Objects.isNull(group)) {
+                continue;
+            }
+            String ownerNum = group.getOwnerUserId();
+            //自分が管理しているグループを表示させない為の条件分岐
+            if (ownerNum.equals(userNum)) {
+                continue;
+            }
+            JoinGroup joinGroup = new JoinGroup();
+            joinGroup.setGroupName(group.getGroupName());
+            joinGroup.setGroupId(groupId);
+            joinGroups.add(joinGroup);
+        }
+
+        JoinGroupResponse response = JoinGroupResponse.builder().joinGroups(joinGroups).build();
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

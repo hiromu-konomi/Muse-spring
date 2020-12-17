@@ -23,11 +23,23 @@ public class GroupService {
         return groupRepository.getMaxId(userNum);
     }
 
+    // ユーザーが管理しているグループを全件取得
     public List<Group> ownerGroupList(String userNum) {
         return groupRepository.groupList(userNum);
     }
 
+    // ユーザーが管理しているグループを検索ワードをもとに全件取得
+    public List<Group> ownerGroupListByWord(String userNum, String searchWord) {
+        return groupRepository.groupListByWord(userNum, searchWord);
+    }
+
+    // 主キーをもとに検索
     public Group findByGroupId(Long groupId) {
         return groupRepository.getOne(groupId);
+    }
+
+    // 主キーとワードをもとに検索
+    public Group findByIdAndSearchWord(Long groupId, String searchWord) {
+        return groupRepository.findByIdAndName(groupId, searchWord);
     }
 }
