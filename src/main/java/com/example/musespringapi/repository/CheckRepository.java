@@ -29,4 +29,6 @@ public interface CheckRepository extends JpaRepository<Check, Integer> {
     @Transactional
     @Query(value = "DELETE FROM `checks` WHERE `music_id` = ?1 AND `user_num` = ?2", nativeQuery = true)
     void deleteChecks(Integer musicId, String userNum);
+    
+    List<Check> findByUserNum(String userNum);
 }
