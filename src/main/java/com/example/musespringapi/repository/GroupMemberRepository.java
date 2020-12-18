@@ -22,4 +22,6 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> 
     // ユーザーが参加しているグループのIDを全件取得するメソッド
     @Query(value = "SELECT `group_id` FROM `group_member` WHERE `user_num` = ?1", nativeQuery = true)
     List<Long> findByUserNum(String userNum);
+    
+    
 }
