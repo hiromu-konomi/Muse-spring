@@ -5,14 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Setter
@@ -46,8 +44,8 @@ public class User {
     private Date hireDate;
     
    /** 画像　*/
-    @Column(name = "photo", columnDefinition = "MEDIUMTEXT)")
-    private String photo;
+    // @Column(name = "photo", columnDefinition = "MEDIUMTEXT)")
+    // private String photo;
      
 
     // /** ポストテーブルとの結合 */
