@@ -44,6 +44,11 @@ public class User {
     /** 入社年月 */
     @Column(name = "hire_date", columnDefinition = "DATE")
     private Date hireDate;
+    
+   /** 画像　*/
+    @Column(name = "photo", columnDefinition = "MEDIUMTEXT)")
+    private String photo;
+     
 
     // /** ポストテーブルとの結合 */
     // @OneToMany(mappedBy = "music")
