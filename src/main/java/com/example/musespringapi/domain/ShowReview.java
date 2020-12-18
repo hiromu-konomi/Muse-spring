@@ -30,6 +30,12 @@ public class ShowReview {
     /** いいねをしているかの状態 */
     private Boolean likeStatus;
 
+    /** checkの総数 */
+    private Integer checkCount;
+
+    /** チェックしているかの状態 */
+    private Boolean checkStatus;
+
     int getPosrId() {
         return this.postId;
     }
