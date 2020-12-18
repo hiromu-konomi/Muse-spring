@@ -56,6 +56,8 @@ public class HomeRestController {
             showReview.setUserName(user.getUserName());
             showReview.setPostText(post.getPostText());
             showReview.setPostId(post.getPostId());
+            showReview.setUserNum(post.getUserNum());
+   
             Like like = likeService.userNumAndPostId(userNum, post.getPostId());
             if (like == null) {
                 showReview.setLikeStatus(false);
