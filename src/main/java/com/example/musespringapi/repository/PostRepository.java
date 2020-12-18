@@ -21,6 +21,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     // フォローしてるpostIDを取ってくる処理
     @Query(value = "SELECT * FROM `posts` WHERE `user_num` = ?1 ORDER BY `post_id` DESC", nativeQuery = true)
     List<Post> getPostIdFromFollowingUser(String followingUser);
+    
 
     //あいまい検索時、postIdによりpostTextとuserIdを取ってくる
     @Query(value = "SELECT * FROM `posts` WHERE `post_id` = ?1", nativeQuery = true)

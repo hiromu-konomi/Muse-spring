@@ -26,4 +26,5 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> 
     // ユーザーがそのグループに既に招待されているか確認するメソッド
     @Query(value = "SELECT * FROM `group_member` WHERE `user_num` = ?1 AND `group_id` = ?2", nativeQuery = true)
     GroupMember findByUserNumAndGroupId(String userNum, Long groupId);
+
 }
