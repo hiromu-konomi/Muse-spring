@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.example.musespringapi.domain.Check;
 import com.example.musespringapi.domain.Like;
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.ShowReview;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.PostResponce;
+import com.example.musespringapi.service.CheckService;
 import com.example.musespringapi.service.LikeService;
 import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
@@ -17,11 +19,7 @@ import com.example.musespringapi.service.RelationService;
 import com.example.musespringapi.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +32,7 @@ public class HomeRestController {
     private final PostService postService;
     private final UserService userService;
     private final LikeService likeService;
+    private final CheckService checkService;
 
     @GetMapping("/getMusicInfoAndReview")
     public ResponseEntity<PostResponce> getMusicInfo(String userNum) {
@@ -65,6 +64,17 @@ public class HomeRestController {
             }
             Integer likeList = likeService.likeList(post.getPostId());
             showReview.setLikeCount(likeList);
+            // postIdからmusicIdの取得
+            Integer musicId = checkService.getMusicId(post.getPostId());
+            Check check = checkService.checkList(userNum, musicId);
+            if (check == null) {
+                showReview.setCheckStatus(false);
+            } else {
+                showReview.setCheckStatus(true);
+            }
+            // musicIdからチェックされた総数を数える
+            Integer countCheck = checkService.checkCount(musicId);
+            showReview.setCheckCount(countCheck);
             reviewList.add(showReview);
         }
 
@@ -92,8 +102,28 @@ public class HomeRestController {
     }
 
     @GetMapping("/notLike")
-    public void deleteLike(Integer postId) {
-        likeService.deleteLike(postId);
+    public void deleteLike(Integer postId, String userNum) {
+        likeService.deleteLike(postId, userNum);
+    }
+
+    @GetMapping("/check")
+    public Integer insertChecks(Integer postId, String userNum) {
+
+        Integer musicId = checkService.getMusicId(postId);
+        Check check = new Check();
+        check.setMusicId(musicId);
+        check.setUserNum(userNum);
+
+        checkService.insertChecks(check);
+
+        Integer checkCount = checkService.checkCount(musicId);
+        return checkCount;
+    }
+
+    @GetMapping("/notCheck")
+    public void deleteChecks(Integer postId, String userNum) {
+        Integer getMusicId = checkService.getMusicId(postId);
+        checkService.deleteChecks(getMusicId, userNum);
     }
 
 }
