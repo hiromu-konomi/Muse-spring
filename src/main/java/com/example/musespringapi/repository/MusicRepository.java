@@ -19,4 +19,6 @@ public interface MusicRepository extends JpaRepository<Music, Integer> {
     @Query(value = "SELECT * FROM `musics` WHERE `artist_name` LIKE %?1%", nativeQuery = true)
     List<Music> findByArtistNameStartsWith(String searchPost);
 
+    List<Music> findByMusicId(Integer musicId);
+    
 }
