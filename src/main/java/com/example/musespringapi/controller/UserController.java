@@ -1,6 +1,7 @@
 package com.example.musespringapi.controller;
 
 import com.example.musespringapi.domain.User;
+import com.example.musespringapi.repository.UserRepository;
 import com.example.musespringapi.service.UserService;
 
 import java.text.ParseException;
@@ -11,9 +12,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,6 +81,27 @@ public class UserController {
 
     return userList;
   }
+
+  
+  //ユーザー情報をアップデート
+  @PutMapping("/userDetail/{userNum}")
+  public void updateUserDetail(@PathVariable String userNum, String downloadURL) {
+	  System.out.println("アップデート="+userNum);
+	  System.out.println("photo="+downloadURL);
+	  
+	  User userDetail = userService.findByUserId(userNum);
+	  
+	  User user = new User();
+	  user.setUserId(userDetail.getUserId());
+	  user.setDepName(userDetail.getDepName());
+	  user.setHireDate(userDetail.getHireDate());
+	  user.setUserNum(userNum);
+	  user.setProfile(userDetail.getProfile());
+	  user.setPhoto(downloadURL);
+	  
+	  userService.insertUser(user);
+  }
+  
 
   // @RequestMapping(path = "/postform", method = RequestMethod.GET)
   @GetMapping("/postform")

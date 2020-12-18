@@ -23,6 +23,9 @@ public class ShowReview {
     private Integer postId;
 
     private String userName;
+    
+    /**　ユーザーId */
+    private String userNum;
 
     /** likeの総数 */
     private Integer likeCount;
