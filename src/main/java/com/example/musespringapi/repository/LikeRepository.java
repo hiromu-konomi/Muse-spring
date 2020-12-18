@@ -14,8 +14,8 @@ public interface LikeRepository extends JpaRepository<Like, String> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM `likes` WHERE `post_id` = ?1", nativeQuery = true)
-    void deleteLike(Integer postId);
+    @Query(value = "DELETE FROM `likes` WHERE `post_id` = ?1 AND `user_num` = ?2", nativeQuery = true)
+    void deleteLike(Integer postId, String userNum);
 
     @Query(value = "SELECT COUNT(`post_id`) FROM `likes` WHERE `post_id` = ?1", nativeQuery = true)
     Integer likeList(Integer postId);
