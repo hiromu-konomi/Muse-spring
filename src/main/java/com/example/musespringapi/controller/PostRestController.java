@@ -6,10 +6,12 @@ import java.util.List;
 
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
+
 import com.example.musespringapi.domain.ShowReview;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.PostResponce;
 import com.example.musespringapi.response.ReviewResponce;
+
 import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
 import com.example.musespringapi.service.RelationService;
@@ -33,21 +35,11 @@ import lombok.RequiredArgsConstructor;
 public class PostRestController {
 
     private final PostService postService;
+
     private final PostCardService postCardService;
-    private final RelationService relationService;
+   
     private final UserService userService;
 
-    // @RequestMapping(value = "/review", method = RequestMethod.POST)
-    // public void InsertMusicPost(@RequestBody String artistName, String musicName,
-    // String userId, String postText) {
-    // System.out.println(artistName);
-    // System.out.println(musicName);
-    // System.out.println(userId);
-    // System.out.println(postText);
-
-    // postService.insertPost(postText, artistName, musicName, userId);
-
-    // }
 
     @PostMapping("/form")
     @ResponseStatus(HttpStatus.CREATED)

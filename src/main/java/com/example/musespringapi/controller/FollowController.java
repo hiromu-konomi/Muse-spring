@@ -2,21 +2,20 @@ package com.example.musespringapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.musespringapi.domain.Relation;
 import com.example.musespringapi.domain.User;
-import com.example.musespringapi.response.followUserResponse;
 import com.example.musespringapi.service.RelationService;
+import com.example.musespringapi.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class FollowController {
 	
 	private final RelationService relationService;
-	
+	private final UserService userService;
 	
 	@PostMapping("/follow")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -98,6 +97,29 @@ public class FollowController {
 		}
 		
 		System.out.println(userList);
+		return userList;
+	}
+
+	// フォローしているユーザーを名前で曖昧検索する際に GET されるメソッド
+	@GetMapping("/searchFollowing")
+	public List<User> getFollowingUsersBySearch(String followingUserNum, String searchWord) {
+
+		List<Relation> relationList =  relationService.findByFollowingUserNum(followingUserNum);
+		List<User> userList = new ArrayList<>();
+
+		if(relationList == null) {
+			return null;
+		} else {
+			for(Relation relation : relationList) {
+				String userNum = relation.getFollowerUserNum();
+				User user = userService.findByUserNumAndSearchWord(userNum, searchWord);
+				if (Objects.isNull(user)) {
+					continue;
+				}
+				userList.add(user);
+			}
+		}
+
 		return userList;
 	}
 }

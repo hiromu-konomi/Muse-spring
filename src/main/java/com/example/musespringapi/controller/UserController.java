@@ -40,7 +40,7 @@ public class UserController {
   @PostMapping("/userDetail")
   @ResponseStatus(HttpStatus.CREATED)
   public void addUserDetail(@RequestBody User user) {
-	System.out.println(user.getHireDate());
+    System.out.println(user.getHireDate());
     userService.insertUser(user);
   }
 
@@ -51,37 +51,37 @@ public class UserController {
     System.out.println("userId=" + userNum);
     userService.insertUserId(userNum);
   }
-  
-  
-  //入社日で表示する
+
+  // 入社日で表示する
   @GetMapping("/userInfo")
   public List<User> findByHireDate(String userNum) {
-	  
-	  User user = userService.findByUserId(userNum);
-	  List<User> userList = new ArrayList<User>();
-	  
-	  if(user == null) {
-		  return null;
-	  } else {
-		  List<User> userListByHireDate = userService.findByHireDate(user.getHireDate());
-		  
-		  if(userListByHireDate == null) {
-			  return null;
-		  } else {
-			  for(User users : userListByHireDate) {
-				  System.out.println(users.getUserNum());
-				  System.out.println(userNum);
-				  if(!(users.getUserNum().equals(userNum))) {
-					  userList.add(users);
-				  }
-			  }
-		  }
-	  }
-	  
-	  System.out.println(userList.size());
 
-	  return userList;
+    User user = userService.findByUserId(userNum);
+    List<User> userList = new ArrayList<User>();
+
+    if (user == null) {
+      return null;
+    } else {
+      List<User> userListByHireDate = userService.findByHireDate(user.getHireDate());
+
+      if (userListByHireDate == null) {
+        return null;
+      } else {
+        for (User users : userListByHireDate) {
+          System.out.println(users.getUserNum());
+          System.out.println(userNum);
+          if (!(users.getUserNum().equals(userNum))) {
+            userList.add(users);
+          }
+        }
+      }
+    }
+
+    System.out.println(userList.size());
+
+    return userList;
   }
+
   
   //ユーザー情報をアップデート
   @PutMapping("/userDetail/{userNum}")
@@ -107,12 +107,12 @@ public class UserController {
   @GetMapping("/postform")
   public String show(String userNum) {
 
-    List<User> userList = userService.findByUserNum(userNum);
+    String userName = userService.userNameFindByUserNum(userNum);
 
     User user = new User();
-    user.setUserName(userList.get(0).getUserName());
-    System.out.println(user.getUserName());
-    return user.getUserName();
+    user.setUserName(userName);
+    System.out.println(userName);
+    return userName;
 
   }
 

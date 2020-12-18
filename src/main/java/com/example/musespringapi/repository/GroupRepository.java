@@ -15,7 +15,15 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query(value = "SELECT MAX(`group_id`) FROM `groups` WHERE `owner_user_id` = ?1", nativeQuery = true)
     Long getMaxId(String userNum);
 
-    // 管理しているグループのグループIDとグループ名を全件取得する
+    // 管理しているグループ一覧を管理者のユーザーIDをもとに全件取得する
     @Query(value = "SELECT * FROM `groups` WHERE `owner_user_id` = ?1 ORDER BY `group_id` DESC", nativeQuery = true)
     List<Group> groupList(String userNum);
+
+    // 管理しているグループ一覧を管理者のユーザーIDと検索ワードをもとに全件取得する
+    @Query(value = "SELECT * FROM `groups` WHERE `owner_user_id` = ?1 AND `group_name` LIKE %?2%", nativeQuery = true)
+    List<Group> groupListByWord(String userNum, String searchWord);
+
+    // 参加しているグループ一覧をグループのIDと検索ワードをもとに一件かnullを取得する
+    @Query(value = "SELECT * FROM `groups` WHERE `group_id` = ?1 AND `group_name` LIKE %?2%", nativeQuery = true)
+    Group findByIdAndName(Long groupId, String searchWord);
 }

@@ -27,6 +27,12 @@ public class ShowReview {
     /**　ユーザーId */
     private String userNum;
 
+    /** likeの総数 */
+    private Integer likeCount;
+
+    /** いいねをしているかの状態 */
+    private Boolean likeStatus;
+
     int getPosrId() {
         return this.postId;
     }
