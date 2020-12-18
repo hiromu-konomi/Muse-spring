@@ -1,8 +1,12 @@
 package com.example.musespringapi.repository;
 
+
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import com.example.musespringapi.domain.Like;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,7 +14,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LikeRepository extends JpaRepository<Like, String> {
+public interface LikeRepository extends JpaRepository<Like, Integer> {
+	
+	List<Like> findByUserNum(String userNum);
 
     @Modifying
     @Transactional
@@ -22,4 +28,6 @@ public interface LikeRepository extends JpaRepository<Like, String> {
 
     @Query(value = "SELECT * FROM `likes` WHERE `user_num` = ?1 AND `post_id` = ?2", nativeQuery = true)
     Like userNumAndPostId(String userNum, Integer postId);
+    
+    
 }
