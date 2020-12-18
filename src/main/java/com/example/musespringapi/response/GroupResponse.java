@@ -9,5 +9,5 @@ public class GroupResponse {
     private Long groupId;
     private String groupName;
     private String ownerId;
-    private Integer joinSatus;
+    private Integer joinStatus;
 }
