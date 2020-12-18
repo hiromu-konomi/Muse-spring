@@ -25,10 +25,13 @@ public interface RelationRepository extends JpaRepository<Relation, Integer> {
     @Query(value = "DELETE FROM `relation` WHERE `following_user_num` = ?1 AND `follower_user_num` = ?2", nativeQuery = true)
     void DeleteFollowUser(String followingUserNum, String followerUserNum);
 
+    
+   
 //    @Query(value = "SELECT * FROM `relation` WHERE `following_user_num` = ?1 AND `follower_user_num` = ?2", nativeQuery = true)
 //    Relation findByFollowingUserNumAndFollowerUserNum(String followingUserNum, String followerUserNum);
    
     //自分がフォローしているユーザーを取ってくる
+   
     List<Relation> findByFollowingUserNum(String followingUserNum);
     
     

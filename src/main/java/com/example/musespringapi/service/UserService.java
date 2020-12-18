@@ -1,6 +1,5 @@
 package com.example.musespringapi.service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -62,12 +61,17 @@ public class UserService {
 		return userList; 
 	};
 
-	// Firebase の ID をもとにユーザー名を検索
+	//userNumをもとにユーザー名を検索
 	public String userNameFindByUserNum(String userNum) {
 		return userRepository.userNameFindByUserNum(userNum);
 	}
 
 	public User userName(String userNum) {
 		return userRepository.userNameList(userNum);
+	}
+
+	//userNumとuserNameの曖昧検索をもとにユーザーを取得
+	public User findByUserNumAndSearchWord(String userNum, String searchWord) {
+		return userRepository.findByUserNumAndSearchWord(userNum, searchWord);
 	}
 }
