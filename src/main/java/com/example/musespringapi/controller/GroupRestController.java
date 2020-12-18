@@ -9,6 +9,7 @@ import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupMember;
 import com.example.musespringapi.domain.JoinGroup;
 import com.example.musespringapi.domain.OwnerGroup;
+import com.example.musespringapi.request.AddGroupRequest;
 import com.example.musespringapi.response.FollowUsersGrpStsResponse;
 import com.example.musespringapi.response.GroupResponse;
 import com.example.musespringapi.response.JoinGroupResponse;
@@ -20,6 +21,7 @@ import com.example.musespringapi.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,9 +37,13 @@ public class GroupRestController {
     private final RelationService relationService;
     private final UserService userService;
 
-    // グループを新規作成した際に GET されるメソッド
-    @RequestMapping(value = "/showGroup", method = RequestMethod.GET)
-    public GroupResponse showGroup(String groupName, String userNum) {
+    // グループを新規作成した際に POST されるメソッド
+    @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
+    public void createGroup(@RequestBody AddGroupRequest request) {
+
+        String groupName = request.getGroupName();
+        String userNum = request.getUserNum();
+        List<String> inviteUsers = request.getInviteUsers();
 
         // groups テーブルに INSERT
         Group insertGroup = new Group();
@@ -47,18 +53,37 @@ public class GroupRestController {
 
         // group_id を取得して group_member テーブルに INSERT(作成者のみ)
         Long groupId = groupService.newGroupId(userNum);
-        GroupMember insertMember = new GroupMember();
-        insertMember.setGroupId(groupId);
-        insertMember.setUserNum(userNum);
-        insertMember.setJoinStatus(1);
-        groupMemberService.save(insertMember);
+        GroupMember ownerMember = new GroupMember();
+        ownerMember.setGroupId(groupId);
+        ownerMember.setUserNum(userNum);
+        ownerMember.setJoinStatus(1);
+        groupMemberService.save(ownerMember);
+
+        // ユーザーを招待していた場合、そのユーザー達も group_member に INSERT
+        if (inviteUsers.size() != 0) {
+            for (String inviteUser : inviteUsers) {
+                GroupMember joinMember = new GroupMember();
+                joinMember.setGroupId(groupId);
+                joinMember.setUserNum(inviteUser);
+                joinMember.setJoinStatus(2);
+                groupMemberService.save(joinMember);
+            }
+        }
+    }
+
+    // グループを新規作成した際に GET されるメソッド
+    @RequestMapping(value = "/showGroup", method = RequestMethod.GET)
+    public GroupResponse showGroup(String userNum) {
+
+        Long groupId = groupService.newGroupId(userNum);
+        String groupName = groupService.findByGroupId(groupId).getGroupName();
 
         // グループ詳細画面に表示するグループデータを取得して返す
         GroupResponse response = new GroupResponse();
         response.setGroupId(groupId);
         response.setGroupName(groupName);
         response.setOwnerId(userNum);
-        response.setJoinSatus(1);
+        response.setJoinStatus(1);
         return response;
     }
 
@@ -190,5 +215,30 @@ public class GroupRestController {
         .followUsers(followUsers)
         .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 「参加」ボタンが押下された際に GET されるメソッド
+    @RequestMapping(value = "/setJoinStatus", method = RequestMethod.GET)
+    public Integer setJoinStatus(String userNum, Long groupId) {
+
+        GroupMember inviteMember = groupMemberService.findByUserNumAndGroupId(userNum, groupId);
+        // 既に招待されていたらUPDATE、されていなければINSERT        
+        if (Objects.isNull(inviteMember)) {
+            // 招待されてないユーザーの場合( 新たにINSERT )
+            GroupMember insertMember = new GroupMember();
+            insertMember.setGroupId(groupId);
+            insertMember.setUserNum(userNum);
+            insertMember.setJoinStatus(1);
+            groupMemberService.save(insertMember);
+        } else {
+            // 招待されているユーザーの場合( 既存のレコードをUPDATE )
+            GroupMember updateMember = new GroupMember();
+            updateMember.setGroupMemberId(inviteMember.getGroupMemberId());
+            updateMember.setGroupId(groupId);
+            updateMember.setUserNum(userNum);
+            updateMember.setJoinStatus(1);
+        }
+        // 参加済の画面表示にするため、JoinStatus（１）をreturn
+        return 1;
     }
 }
