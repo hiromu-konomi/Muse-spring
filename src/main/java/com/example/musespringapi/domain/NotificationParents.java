@@ -20,7 +20,7 @@ public class NotificationParents {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer notificationParentsId;
 
-    @Column(name = "type_number")
-    private Integer typeNumber;
+    @Column(name = "notification_type")
+    private String notificationType;
 
 }
