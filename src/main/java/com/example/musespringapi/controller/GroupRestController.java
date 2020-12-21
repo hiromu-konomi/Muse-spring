@@ -9,7 +9,6 @@ import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupMember;
 import com.example.musespringapi.domain.JoinGroup;
 import com.example.musespringapi.domain.OwnerGroup;
-import com.example.musespringapi.request.AddGroupRequest;
 import com.example.musespringapi.response.FollowUsersGrpStsResponse;
 import com.example.musespringapi.response.GroupResponse;
 import com.example.musespringapi.response.JoinGroupResponse;
@@ -21,7 +20,6 @@ import com.example.musespringapi.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,13 +35,9 @@ public class GroupRestController {
     private final RelationService relationService;
     private final UserService userService;
 
-    // グループを新規作成した際に POST されるメソッド
-    @RequestMapping(value = "/createGroup", method = RequestMethod.POST)
-    public void createGroup(@RequestBody AddGroupRequest request) {
-
-        String groupName = request.getGroupName();
-        String userNum = request.getUserNum();
-        List<String> inviteUsers = request.getInviteUsers();
+    // グループを新規作成した際に GET されるメソッド
+    @RequestMapping(value = "/createGroup", method = RequestMethod.GET)
+    public GroupResponse createGroup(String userNum, String groupName, String[] inviteUsers) {
 
         // groups テーブルに INSERT
         Group insertGroup = new Group();
@@ -60,7 +54,7 @@ public class GroupRestController {
         groupMemberService.save(ownerMember);
 
         // ユーザーを招待していた場合、そのユーザー達も group_member に INSERT
-        if (inviteUsers.size() != 0) {
+        try {
             for (String inviteUser : inviteUsers) {
                 GroupMember joinMember = new GroupMember();
                 joinMember.setGroupId(groupId);
@@ -68,15 +62,8 @@ public class GroupRestController {
                 joinMember.setJoinStatus(2);
                 groupMemberService.save(joinMember);
             }
+        } catch (java.lang.NullPointerException ex) {
         }
-    }
-
-    // グループを新規作成した際に GET されるメソッド
-    @RequestMapping(value = "/showGroup", method = RequestMethod.GET)
-    public GroupResponse showGroup(String userNum) {
-
-        Long groupId = groupService.newGroupId(userNum);
-        String groupName = groupService.findByGroupId(groupId).getGroupName();
 
         // グループ詳細画面に表示するグループデータを取得して返す
         GroupResponse response = new GroupResponse();
@@ -240,5 +227,23 @@ public class GroupRestController {
         }
         // 参加済の画面表示にするため、JoinStatus（１）をreturn
         return 1;
+    }
+
+    // グループの説明文が編集された際に GET されるメソッド
+    @RequestMapping(value = "/setGrpDes")
+    public String setGrpDes(String groupDescription, Long groupId) {
+
+        // groupsテーブルからgroup_idをもとにレコード検索
+        Group group = groupService.findByGroupId(groupId);
+
+        // groupsテーブルの既存レコードのgroup_descriptionを更新
+        Group updateGroup = new Group();
+        updateGroup.setGroupId(groupId);
+        updateGroup.setGroupName(group.getGroupName());
+        updateGroup.setGroupDescription(groupDescription);
+        updateGroup.setOwnerUserId(group.getOwnerUserId());
+        groupService.save(updateGroup);
+
+        return groupDescription;
     }
 }
