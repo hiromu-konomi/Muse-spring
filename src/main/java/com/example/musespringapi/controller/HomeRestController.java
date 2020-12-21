@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.musespringapi.domain.Check;
 import com.example.musespringapi.domain.Like;
+import com.example.musespringapi.domain.LikeNotification;
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.ShowReview;
@@ -13,6 +14,7 @@ import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.PostResponce;
 import com.example.musespringapi.service.CheckService;
 import com.example.musespringapi.service.LikeService;
+import com.example.musespringapi.service.NotificationService;
 import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
 import com.example.musespringapi.service.RelationService;
@@ -29,6 +31,7 @@ public class HomeRestController {
 
     private final PostCardService postCardService;
     private final RelationService relationService;
+    private final NotificationService notificationService;
     private final PostService postService;
     private final UserService userService;
     private final LikeService likeService;
@@ -90,16 +93,22 @@ public class HomeRestController {
     @GetMapping("/like")
     public Integer insertLike(Integer postId, String userNum) {
 
-        System.out.println("postId=" + postId);
-
         Like like = new Like();
+        LikeNotification likeNotification = new LikeNotification();
+
+        Post post = notificationService.getPostByPostId(postId);
+
+        likeNotification.setLikeReceiver(post.getUserNum());
+        likeNotification.setLikeTransfer(userNum);
+
+        notificationService.insertLikeNotification(likeNotification);
+
         like.setPostId(postId);
         like.setUserNum(userNum);
 
         likeService.insertPostId(like);
 
         Integer likeList = likeService.likeList(postId);
-        System.out.println(likeList);
         return likeList;
     }
 
