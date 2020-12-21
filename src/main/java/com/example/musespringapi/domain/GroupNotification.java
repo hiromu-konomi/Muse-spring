@@ -29,4 +29,7 @@ public class GroupNotification {
     @Column(name = "notification_parents_id")
     private Integer notificationParentsId;
 
+    @Column(name = "group_id")
+    private Integer groupId;
+
 }
