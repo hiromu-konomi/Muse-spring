@@ -1,13 +1,9 @@
 package com.example.musespringapi.controller;
 
 import com.example.musespringapi.domain.User;
-import com.example.musespringapi.repository.UserRepository;
 import com.example.musespringapi.service.UserService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -97,6 +92,7 @@ public class UserController {
 	  user.setHireDate(userDetail.getHireDate());
 	  user.setUserNum(userNum);
 	  user.setProfile(userDetail.getProfile());
+
 	  
 	  userService.insertUser(user);
   }
