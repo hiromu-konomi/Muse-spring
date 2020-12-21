@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class FollowLikeNotification {
 
-        //** id */
-        private Integer followNotiId;
+        //** followNotiid */
+        private Integer notiId;
 
         //** フォローしたuserNum */
         private String userNum;
