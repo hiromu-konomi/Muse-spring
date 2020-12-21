@@ -30,8 +30,8 @@ public class ExploreService {
         return postRepository.getPostTextUserIdByPostId(postId);
     }
 
-    public User userNameFindByUserNum(Integer userNum){
-        return userRepository.getUserNameByUserId(userNum);
+    public User userNameFindByUserNum(String userNum){
+        return userRepository.userNameList(userNum);
     }
 
 }

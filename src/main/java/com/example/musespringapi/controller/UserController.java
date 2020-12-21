@@ -92,7 +92,7 @@ public class UserController {
 	  user.setHireDate(userDetail.getHireDate());
 	  user.setUserNum(userNum);
 	  user.setProfile(userDetail.getProfile());
-	  // user.setPhoto(downloadURL);
+
 	  
 	  userService.insertUser(user);
   }
