@@ -26,4 +26,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     // 参加しているグループ一覧をグループのIDと検索ワードをもとに一件かnullを取得する
     @Query(value = "SELECT * FROM `groups` WHERE `group_id` = ?1 AND `group_name` LIKE %?2%", nativeQuery = true)
     Group findByIdAndName(Long groupId, String searchWord);
+
+    @Query(value = "SELECT * FROM `groups` WHERE `group_id` = ?1", nativeQuery = true)
+    Group findById(Integer groupId);
 }
