@@ -37,12 +37,13 @@ public class ExploreRestController {
             showReview.setMusicName(music.getMusicName());
             showReview.setMusicImage(music.getImage());
 
+            System.out.println("showReview.artistName = " + showReview.getArtistName());
+
             Post post = exploreService.userNumPostTextFindByPostId(music.getPostId());
 
             showReview.setPostText(post.getPostText());
 
-            Integer userIntegerNum = Integer.valueOf(post.getUserNum());
-            User user = exploreService.userNameFindByUserNum(userIntegerNum);
+            User user = exploreService.userNameFindByUserNum(post.getUserNum());
 
             showReview.setUserName(user.getUserName());
 
