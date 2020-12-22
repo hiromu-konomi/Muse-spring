@@ -9,10 +9,10 @@ import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupNotification;
 import com.example.musespringapi.domain.GroupToResponse;
 import com.example.musespringapi.domain.LikeNotification;
-import com.example.musespringapi.domain.NotificationParents;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.FollowLikeNotificationResponse;
 import com.example.musespringapi.response.GroupToResponseResponse;
+import com.example.musespringapi.service.GroupService;
 import com.example.musespringapi.service.NotificationService;
 
 import org.springframework.http.HttpStatus;
@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class NotificationController {
 
     private final NotificationService notificationService;
+    private final GroupService groupService;
 
     //** フォロー通知の必要情報を取ってくる作業 */
     @RequestMapping(value = "/followNotification" , method = RequestMethod.GET)
@@ -45,9 +46,6 @@ public class NotificationController {
 
             User user = notificationService.getUserByTransfer(folNoti.getFollowTransfer());
             followLikeNotification.setUserName(user.getUserName());
-
-            NotificationParents notiPare = notificationService.getNotiPareByNotiPareId(folNoti.getNotificationParentsId());
-            followLikeNotification.setNotificationType(notiPare.getNotificationType());
 
             followLikeNotificationList.add(followLikeNotification);
 
@@ -77,9 +75,6 @@ public class NotificationController {
             User user = notificationService.getUserByTransfer(likeNoti.getLikeTransfer());
             followLikeNotification.setUserName(user.getUserName());
 
-            NotificationParents notiPare = notificationService.getNotiPareByNotiPareId(likeNoti.getNotificationParentsId());
-            followLikeNotification.setNotificationType(notiPare.getNotificationType());
-
             followLikeNotificationList.add(followLikeNotification);
 
         }
@@ -108,7 +103,7 @@ public class NotificationController {
 
             groupToResponse.setTransferUserName(user.getUserName());
 
-            Group group = notificationService.getGroupByGroupId(grpNoti.getGroupId());
+            Group group = groupService.findByGroupId(grpNoti.getGroupId());
 
             groupToResponse.setGroupId(grpNoti.getGroupId());
             groupToResponse.setGroupName(group.getGroupName());
