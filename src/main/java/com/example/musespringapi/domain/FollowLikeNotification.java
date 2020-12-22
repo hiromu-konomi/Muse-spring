@@ -16,7 +16,4 @@ public class FollowLikeNotification {
         /** フォローしたuserName */
         private String userName;
 
-        /** 通知タイプ */
-        private String notificationType;
-
 }

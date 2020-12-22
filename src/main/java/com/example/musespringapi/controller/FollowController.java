@@ -38,7 +38,6 @@ public class FollowController {
 
 		followNotification.setFollowTransfer(relation.getFollowingUserNum());
 		followNotification.setFollowReceiver(relation.getFollowerUserNum());
-		followNotification.setNotificationParentsId(1);
 
 		relationService.insertFollowUser(relation);
 

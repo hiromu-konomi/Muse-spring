@@ -26,7 +26,4 @@ public class FollowNotification {
     @Column(name = "follow_receiver", columnDefinition = "VARCHAR(225)")
     private String followReceiver;
 
-    @Column(name = "notification_parents_id")
-    private Integer notificationParentsId;
-
 }

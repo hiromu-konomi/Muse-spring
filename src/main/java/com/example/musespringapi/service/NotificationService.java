@@ -3,17 +3,13 @@ package com.example.musespringapi.service;
 import java.util.List;
 
 import com.example.musespringapi.domain.FollowNotification;
-import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupNotification;
 import com.example.musespringapi.domain.LikeNotification;
-import com.example.musespringapi.domain.NotificationParents;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.repository.FollowNotificationRepository;
 import com.example.musespringapi.repository.GroupNotificationRepository;
-import com.example.musespringapi.repository.GroupRepository;
 import com.example.musespringapi.repository.LikeNotificationRepository;
-import com.example.musespringapi.repository.NotificationParentsRepository;
 import com.example.musespringapi.repository.PostRepository;
 import com.example.musespringapi.repository.UserRepository;
 
@@ -25,12 +21,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private final NotificationParentsRepository notificationParentsRepository;
     private final FollowNotificationRepository followNotificationRepository;
     private final GroupNotificationRepository groupNotificationRepository;
     private final LikeNotificationRepository likeNotificationRepository;
     private final UserRepository userRepository;
-    private final GroupRepository groupRepository;
     private final PostRepository postRepository;
 
     //** フォロー、フォロワー時通知を誰が受け取るのかのインサート */
@@ -68,18 +62,9 @@ public class NotificationService {
         return userRepository.userNameList(transfer);
     }
 
-    /** どのグループから招待が来たのか */
-    public Group getGroupByGroupId(Integer groupId){
-        return groupRepository.findById(groupId);
-    }
-
     /** いいねを押されたuserNumをインサートする際に、postIdからReceiverUserNumを持ってくる */
     public Post getPostByPostId(Integer postId) {
         return postRepository.getPostTextUserIdByPostId(postId);
-    }
-
-    public NotificationParents getNotiPareByNotiPareId(Integer notiPareId){
-        return notificationParentsRepository.getNotiPareByNotiPareId(notiPareId);
     }
 
 }

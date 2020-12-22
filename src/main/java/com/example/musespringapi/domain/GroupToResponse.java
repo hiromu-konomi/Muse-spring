@@ -17,6 +17,6 @@ public class GroupToResponse {
     private String groupName;
 
     /** グループID */
-    private Integer groupId;
+    private Long groupId;
 
 }

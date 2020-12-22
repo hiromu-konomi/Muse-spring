@@ -7,9 +7,11 @@ import java.util.Objects;
 import com.example.musespringapi.domain.FollowUserGrpSts;
 import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupMember;
+import com.example.musespringapi.domain.GroupNotification;
 import com.example.musespringapi.domain.JoinGroup;
 import com.example.musespringapi.domain.OwnerGroup;
 import com.example.musespringapi.domain.User;
+import com.example.musespringapi.request.InviteGroupRequest;
 import com.example.musespringapi.response.FollowUsersGrpStsResponse;
 import com.example.musespringapi.response.GroupMemberResponse;
 import com.example.musespringapi.response.GroupResponse;
@@ -17,11 +19,13 @@ import com.example.musespringapi.response.JoinGroupResponse;
 import com.example.musespringapi.response.OwnerGroupResponse;
 import com.example.musespringapi.service.GroupMemberService;
 import com.example.musespringapi.service.GroupService;
+import com.example.musespringapi.service.NotificationService;
 import com.example.musespringapi.service.RelationService;
 import com.example.musespringapi.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +40,7 @@ public class GroupRestController {
     private final GroupMemberService groupMemberService;
     private final RelationService relationService;
     private final UserService userService;
+    private final NotificationService notificationService;
 
     // グループを新規作成した際に GET されるメソッド
     @RequestMapping(value = "/createGroup", method = RequestMethod.GET)
@@ -55,9 +60,16 @@ public class GroupRestController {
         ownerMember.setJoinStatus(1);
         groupMemberService.save(ownerMember);
 
-        // ユーザーを招待していた場合、そのユーザー達も group_member に INSERT
+        // ユーザーを招待していた場合の処理
         try {
             for (String inviteUser : inviteUsers) {
+                // group_notificationにINSERTする処理
+                GroupNotification gn = new GroupNotification();
+                gn.setGroupTransfer(userNum);
+                gn.setGroupReceiver(inviteUser);
+                gn.setGroupId(groupId);
+                notificationService.insertGroupNotification(gn);
+                // group_memberテーブルにINSERTする処理
                 GroupMember joinMember = new GroupMember();
                 joinMember.setGroupId(groupId);
                 joinMember.setUserNum(inviteUser);
@@ -273,5 +285,29 @@ public class GroupRestController {
         GroupMemberResponse response = GroupMemberResponse.builder().users(users).build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // グループ詳細画面の「招待」ボタンからユーザーを招待した際に POST されるメソッド
+    @RequestMapping(value = "/inviteGroup", method = RequestMethod.POST)
+    public void inviteGroup(@RequestBody InviteGroupRequest request) {
+
+        String groupTransfer = request.getTransferUser();
+        List<String> groupReceiverList = request.getReceiverUsers();
+        Long groupId = request.getGroupId();
+
+        for (String groupReceiver : groupReceiverList) {
+            // group_notificationテーブルにINSERTする処理
+            GroupNotification gn = new GroupNotification();
+            gn.setGroupTransfer(groupTransfer);
+            gn.setGroupReceiver(groupReceiver);
+            gn.setGroupId(groupId);
+            notificationService.insertGroupNotification(gn);
+            // group_memberテーブルにINSERTする処理
+            GroupMember gm = new GroupMember();
+            gm.setGroupId(groupId);
+            gm.setUserNum(groupReceiver);
+            gm.setJoinStatus(2);
+            groupMemberService.save(gm);
+        }
     }
 }
