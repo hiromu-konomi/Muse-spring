@@ -9,7 +9,9 @@ import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.GroupMember;
 import com.example.musespringapi.domain.JoinGroup;
 import com.example.musespringapi.domain.OwnerGroup;
+import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.FollowUsersGrpStsResponse;
+import com.example.musespringapi.response.GroupMemberResponse;
 import com.example.musespringapi.response.GroupResponse;
 import com.example.musespringapi.response.JoinGroupResponse;
 import com.example.musespringapi.response.OwnerGroupResponse;
@@ -230,7 +232,7 @@ public class GroupRestController {
     }
 
     // グループの説明文が編集された際に GET されるメソッド
-    @RequestMapping(value = "/setGrpDes")
+    @RequestMapping(value = "/setGrpDes", method = RequestMethod.GET)
     public String setGrpDes(String groupDescription, Long groupId) {
 
         // groupsテーブルからgroup_idをもとにレコード検索
@@ -245,5 +247,31 @@ public class GroupRestController {
         groupService.save(updateGroup);
 
         return groupDescription;
+    }
+
+    // グループのメンバー一覧画面が表示された際に GET されるメソッド
+    @RequestMapping(value = "/showGroupMember", method = RequestMethod.GET)
+    public ResponseEntity<GroupMemberResponse> showGroupMember(Long groupId) {
+
+        List<User> users = new ArrayList<>();
+        List<GroupMember> memberList = groupMemberService.findByGroupId(groupId);
+
+        for(GroupMember member : memberList) {
+            User user = new User();
+            Integer joinStatus =  member.getJoinStatus();
+            // 参加済のユーザーだけレスポンスする為の条件分岐
+            if (joinStatus != 1) {
+                continue;
+            }
+            String userNum = member.getUserNum();
+            String userName = userService.userNameFindByUserNum(userNum);
+            user.setUserNum(userNum);
+            user.setUserName(userName);
+            users.add(user);
+        }
+
+        GroupMemberResponse response = GroupMemberResponse.builder().users(users).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

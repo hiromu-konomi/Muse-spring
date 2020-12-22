@@ -37,4 +37,9 @@ public class GroupMemberService {
     public GroupMember findByUserNumAndGroupId(String userNum, Long groupId) {
         return groupMemberRepository.findByUserNumAndGroupId(userNum, groupId);
     }
+
+    // グループIDをもとに参加者を全件取得
+    public List<GroupMember> findByGroupId(Long groupId) {
+        return groupMemberRepository.findByGroupId(groupId);
+    }
 }
