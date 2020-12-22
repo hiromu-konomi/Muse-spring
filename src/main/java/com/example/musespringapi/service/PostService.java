@@ -1,8 +1,6 @@
 package com.example.musespringapi.service;
 
 import java.util.List;
-
-import javax.persistence.EntityManagerFactory;
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.repository.MusicRepository;
@@ -36,18 +34,12 @@ public class PostService {
         return postRepository.getPostIdFromFollowingUser(followingUser);
     }
 
-    // public List<Post> selectPost(String userId) {
+    public void deletePost(Integer postId) {
+        postRepository.deletePost(postId);
+    }
 
-    // EntityManagerFactory emf = P
-
-    // List<Post> postLists = entityManager
-    // .createNativeQuery("SELECT artist_name, music_name, post_text"
-    // + "FROM posts p INNER JOIN musics m ON p.music_id = m.music_id"
-    // + "INNER JOIN users u ON p.user_id = u.user_id"
-    // + "WHERE user_id = :userId", Post.class)
-    // .setParameter("userId", userId)
-    // .getResultList();
-
-    // }
+    public void deleteMusic(Integer postId) {
+        musicRepository.deleteMusic(postId);
+    }
 
 }
