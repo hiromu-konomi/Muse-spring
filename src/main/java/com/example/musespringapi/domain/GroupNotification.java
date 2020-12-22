@@ -26,10 +26,7 @@ public class GroupNotification {
     @Column(name = "group_receiver", columnDefinition = "VARCHAR(225)")
     private String groupReceiver;
 
-    @Column(name = "notification_parents_id")
-    private Integer notificationParentsId;
-
     @Column(name = "group_id")
-    private Integer groupId;
+    private Long groupId;
 
 }
