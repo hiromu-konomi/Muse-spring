@@ -26,7 +26,4 @@ public class LikeNotification {
     @Column(name = "like_receiver", columnDefinition = "VARCHAR(225)")
     private String likeReceiver;
 
-    @Column(name = "notification_parents_id")
-    private Integer notificationParentsId;
-
 }
