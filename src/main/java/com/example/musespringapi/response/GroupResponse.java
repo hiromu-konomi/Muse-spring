@@ -10,4 +10,5 @@ public class GroupResponse {
     private String groupName;
     private String ownerId;
     private Integer joinStatus;
+    private String groupDescription;
 }
