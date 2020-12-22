@@ -1,7 +1,6 @@
 package com.example.musespringapi.service;
 
 import java.util.List;
-
 import javax.persistence.EntityManagerFactory;
 
 import com.example.musespringapi.domain.Like;
@@ -39,6 +38,13 @@ public class PostService {
     public List<Post> getPostIdFromFollowingUser(String followingUser) {
         return postRepository.getPostIdFromFollowingUser(followingUser);
     }
+
+    public void deletePost(Integer postId) {
+        postRepository.deletePost(postId);
+    }
+
+    public void deleteMusic(Integer postId) {
+        musicRepository.deleteMusic(postId);
 
     public Post getPostByPostId(Integer postId){
     	List<Post> postList = postRepository.findByPostId(postId);

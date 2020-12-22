@@ -60,7 +60,7 @@ public class HomeRestController {
             showReview.setPostText(post.getPostText());
             showReview.setPostId(post.getPostId());
             showReview.setUserNum(post.getUserNum());
-   
+
             Like like = likeService.userNumAndPostId(userNum, post.getPostId());
             if (like == null) {
                 showReview.setLikeStatus(false);
@@ -86,6 +86,7 @@ public class HomeRestController {
         reviewList.sort(Comparator.comparing(ShowReview::getPostId).reversed());
 
         PostResponce postResponce = PostResponce.builder().reviewAllList(reviewList).build();
+        System.out.println(postResponce.getReviewAllList().toString());
         return new ResponseEntity<>(postResponce, HttpStatus.OK);
 
     }
@@ -135,6 +136,16 @@ public class HomeRestController {
     public void deleteChecks(Integer postId, String userNum) {
         Integer getMusicId = checkService.getMusicId(postId);
         checkService.deleteChecks(getMusicId, userNum);
+    }
+
+    @GetMapping("/deleteInfo")
+    public void deleteInfo(Integer postId, String userNum) {
+        postService.deleteMusic(postId);
+        postService.deletePost(postId);
+        likeService.deleteLike(postId, userNum);
+        Integer getMusicId = checkService.getMusicId(postId);
+        checkService.deleteChecks(getMusicId, userNum);
+        System.out.println(postId);
     }
 
 }

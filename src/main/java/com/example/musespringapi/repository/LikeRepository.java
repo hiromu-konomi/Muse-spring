@@ -28,6 +28,4 @@ public interface LikeRepository extends JpaRepository<Like, Integer> {
 
     @Query(value = "SELECT * FROM `likes` WHERE `user_num` = ?1 AND `post_id` = ?2", nativeQuery = true)
     Like userNumAndPostId(String userNum, Integer postId);
-    
-    
 }

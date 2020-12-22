@@ -50,7 +50,7 @@ public class UserController {
   // 入社日で表示する
   @GetMapping("/userInfo")
   public List<User> findByHireDate(String userNum) {
-
+    System.out.println("userNum=" + userNum);
     User user = userService.findByUserId(userNum);
     List<User> userList = new ArrayList<User>();
 
@@ -77,10 +77,10 @@ public class UserController {
     return userList;
   }
 
-  
-  //ユーザー情報をアップデート
+  // ユーザー情報をアップデート
   @PutMapping("/userDetail/{userNum}")
   public void updateUserDetail(@PathVariable String userNum, String downloadURL) {
+
 	  System.out.println("アップデート="+userNum);
 	  System.out.println("photo="+downloadURL);
 	  
@@ -96,7 +96,6 @@ public class UserController {
 	  
 	  userService.insertUser(user);
   }
-  
 
   // @RequestMapping(path = "/postform", method = RequestMethod.GET)
   @GetMapping("/postform")

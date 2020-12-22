@@ -19,7 +19,6 @@ import com.example.musespringapi.service.CheckService;
 import com.example.musespringapi.service.LikeService;
 import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
-import com.example.musespringapi.service.RelationService;
 import com.example.musespringapi.service.UserService;
 
 import org.springframework.http.HttpStatus;
@@ -49,6 +48,7 @@ public class PostRestController {
     
     private final CheckService checkService;
 
+    private final UserService userService;
 
     @PostMapping("/form")
     @ResponseStatus(HttpStatus.CREATED)
@@ -78,17 +78,18 @@ public class PostRestController {
         System.out.println(maxId);
         return maxId;
     }
-    
+
     @GetMapping("/getMyPosts")
     public ResponseEntity<PostResponce> getMusicInfo(String userNum) {
         List<ShowReview> reviewList = new ArrayList<>();
         List<Post> postIdAllList = new ArrayList<>();
+      
         //自分の投稿取得
         List<Post> postIdList =postService.getPostIdFromFollowingUser(userNum);
         for(Post post : postIdList ) {
         	postIdAllList.add(post);
         }
-        
+
         for (Post post : postIdAllList) {
             ShowReview showReview = new ShowReview();
             //PostIdで音楽を取ってくる
@@ -121,7 +122,8 @@ public class PostRestController {
             // musicIdからチェックされた総数を数える
             Integer countCheck = checkService.checkCount(musicId);
             showReview.setCheckCount(countCheck);
-           
+          
+
             reviewList.add(showReview);
         }
 
@@ -248,5 +250,4 @@ public class PostRestController {
     }
     
     
-
 }

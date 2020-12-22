@@ -2,9 +2,12 @@ package com.example.musespringapi.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.example.musespringapi.domain.Post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +26,12 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> getPostIdFromFollowingUser(String followingUser);
     
 
-    //あいまい検索時、postIdによりpostTextとuserIdを取ってくる
+    // あいまい検索時、postIdによりpostTextとuserIdを取ってくる
     @Query(value = "SELECT * FROM `posts` WHERE `post_id` = ?1", nativeQuery = true)
     Post getPostTextUserIdByPostId(Integer postId);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `posts` WHERE `post_id` = ?1", nativeQuery = true)
+    void deletePost(Integer postId);
 }
