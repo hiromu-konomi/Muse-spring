@@ -88,6 +88,23 @@ public class GroupRestController {
         return response;
     }
 
+    // グループを新規作成する以外で詳細画面に遷移する際に GET されるメソッド
+    @RequestMapping(value = "/showGroup", method = RequestMethod.GET)
+    public GroupResponse showGroup(Long groupId, String userNum) {
+
+        Group group = groupService.findByGroupId(groupId);
+        Integer joinStatus = groupMemberService.getJoinStatus(userNum, groupId);
+
+        // グループ詳細画面に表示するグループデータを取得して返す
+        GroupResponse response = new GroupResponse();
+        response.setGroupId(groupId);
+        response.setGroupName(group.getGroupName());
+        response.setOwnerId(group.getOwnerUserId());
+        response.setJoinStatus(joinStatus);
+        response.setGroupDescription(group.getGroupDescription());
+        return response;
+    }
+
     // 「管理しているグループ」のコンポーネントが表示される際に GET されるメソッド
     @RequestMapping(value = "/showOwnerGroupList", method = RequestMethod.GET)
     public ResponseEntity<OwnerGroupResponse> showOwnerGroupList(String userNum) {
