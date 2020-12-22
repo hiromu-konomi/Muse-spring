@@ -10,11 +10,9 @@ import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.ShowReview;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.PostResponce;
-import com.example.musespringapi.response.ReviewResponce;
 
 import com.example.musespringapi.service.PostCardService;
 import com.example.musespringapi.service.PostService;
-import com.example.musespringapi.service.RelationService;
 import com.example.musespringapi.service.UserService;
 
 import org.springframework.http.HttpStatus;
@@ -37,9 +35,8 @@ public class PostRestController {
     private final PostService postService;
 
     private final PostCardService postCardService;
-   
-    private final UserService userService;
 
+    private final UserService userService;
 
     @PostMapping("/form")
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,23 +58,23 @@ public class PostRestController {
         Integer firstId = postIdList.get(0).getPostId();
         Integer maxId = 1;
         for (Post postId : postIdList) {
-            if (firstId < postId.getPostId()) {
+            if (firstId <= postId.getPostId()) {
                 maxId = postId.getPostId();
             }
         }
         System.out.println(maxId);
         return maxId;
     }
-    
+
     @GetMapping("/getMyPosts")
     public ResponseEntity<PostResponce> getMusicInfo(String userNum) {
         List<ShowReview> reviewList = new ArrayList<>();
         List<Post> postIdAllList = new ArrayList<>();
-        List<Post> postIdList =postService.getPostIdFromFollowingUser(userNum);
-        for(Post post : postIdList ) {
-        	postIdAllList.add(post);
+        List<Post> postIdList = postService.getPostIdFromFollowingUser(userNum);
+        for (Post post : postIdList) {
+            postIdAllList.add(post);
         }
-        
+
         for (Post post : postIdAllList) {
             ShowReview showReview = new ShowReview();
             Music music = postCardService.findByPostId(post.getPostId());
@@ -89,17 +86,16 @@ public class PostRestController {
             showReview.setPostText(post.getPostText());
             showReview.setPostId(post.getPostId());
             showReview.setUserNum(post.getUserNum());
-           
+
             reviewList.add(showReview);
         }
 
         reviewList.sort(Comparator.comparing(ShowReview::getPostId).reversed());
 
         PostResponce postResponce = PostResponce.builder().reviewAllList(reviewList).build();
-        System.out.println("投稿数＝"+postResponce.getReviewAllList().size());
+        System.out.println("投稿数＝" + postResponce.getReviewAllList().size());
         return new ResponseEntity<>(postResponce, HttpStatus.OK);
 
     }
-
 
 }
