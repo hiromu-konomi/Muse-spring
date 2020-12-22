@@ -11,19 +11,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "`follow_notification`")
-public class FollowNotification {
+@Setter
+@Table(name = "like_notification")
+public class LikeNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer followNotificationId;
+    private Integer likeNotificationId;
 
-    @Column(name = "follow_transfer", columnDefinition = "VARCHAR(225)")
-    private String followTransfer;
+    @Column(name = "like_transfer", columnDefinition = "VARCHAR(225)")
+    private String likeTransfer;
 
-    @Column(name = "follow_receiver", columnDefinition = "VARCHAR(225)")
-    private String followReceiver;
+    @Column(name = "like_receiver", columnDefinition = "VARCHAR(225)")
+    private String likeReceiver;
 
 }

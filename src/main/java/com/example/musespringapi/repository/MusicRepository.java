@@ -26,4 +26,7 @@ public interface MusicRepository extends JpaRepository<Music, Integer> {
     @Transactional
     @Query(value = "DELETE FROM `musics` WHERE `post_id` = ?1", nativeQuery = true)
     void deleteMusic(Integer postId);
+
+    List<Music> findByMusicId(Integer musicId);
+    
 }

@@ -32,4 +32,14 @@ public class GroupMemberService {
     public List<Long> findByUserNum(String userNum) {
         return groupMemberRepository.findByUserNum(userNum);
     }
+
+    // ユーザーがそのグループに招待されているか確認するメソッド
+    public GroupMember findByUserNumAndGroupId(String userNum, Long groupId) {
+        return groupMemberRepository.findByUserNumAndGroupId(userNum, groupId);
+    }
+
+    // グループIDをもとに参加者を全件取得
+    public List<GroupMember> findByGroupId(Long groupId) {
+        return groupMemberRepository.findByGroupId(groupId);
+    }
 }
