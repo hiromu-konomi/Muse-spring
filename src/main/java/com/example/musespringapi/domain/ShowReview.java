@@ -1,10 +1,8 @@
 package com.example.musespringapi.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 public class ShowReview {
 
     // ** アーティストネーム */
@@ -23,8 +21,8 @@ public class ShowReview {
     private Integer postId;
 
     private String userName;
-    
-    /**　ユーザーId */
+
+    /** ユーザーId */
     private String userNum;
 
     /** likeの総数 */
