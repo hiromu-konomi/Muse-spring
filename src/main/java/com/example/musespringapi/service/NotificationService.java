@@ -5,13 +5,11 @@ import java.util.List;
 import com.example.musespringapi.domain.FollowNotification;
 import com.example.musespringapi.domain.GroupNotification;
 import com.example.musespringapi.domain.LikeNotification;
-import com.example.musespringapi.domain.NotificationParents;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.repository.FollowNotificationRepository;
 import com.example.musespringapi.repository.GroupNotificationRepository;
 import com.example.musespringapi.repository.LikeNotificationRepository;
-import com.example.musespringapi.repository.NotificationParentsRepository;
 import com.example.musespringapi.repository.PostRepository;
 import com.example.musespringapi.repository.UserRepository;
 
@@ -23,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private final NotificationParentsRepository notificationParentsRepository;
     private final FollowNotificationRepository followNotificationRepository;
     private final GroupNotificationRepository groupNotificationRepository;
     private final LikeNotificationRepository likeNotificationRepository;
@@ -68,10 +65,6 @@ public class NotificationService {
     /** いいねを押されたuserNumをインサートする際に、postIdからReceiverUserNumを持ってくる */
     public Post getPostByPostId(Integer postId) {
         return postRepository.getPostTextUserIdByPostId(postId);
-    }
-
-    public NotificationParents getNotiPareByNotiPareId(Integer notiPareId){
-        return notificationParentsRepository.getNotiPareByNotiPareId(notiPareId);
     }
 
 }
