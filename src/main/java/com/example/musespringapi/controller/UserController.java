@@ -55,7 +55,7 @@ public class UserController {
   // 入社日で表示する
   @GetMapping("/userInfo")
   public List<User> findByHireDate(String userNum) {
-
+    System.out.println("userNum=" + userNum);
     User user = userService.findByUserId(userNum);
     List<User> userList = new ArrayList<User>();
 
@@ -82,26 +82,24 @@ public class UserController {
     return userList;
   }
 
-  
-  //ユーザー情報をアップデート
+  // ユーザー情報をアップデート
   @PutMapping("/userDetail/{userNum}")
   public void updateUserDetail(@PathVariable String userNum, String downloadURL) {
-	  System.out.println("アップデート="+userNum);
-	  System.out.println("photo="+downloadURL);
-	  
-	  User userDetail = userService.findByUserId(userNum);
-	  
-	  User user = new User();
-	  user.setUserId(userDetail.getUserId());
-	  user.setDepName(userDetail.getDepName());
-	  user.setHireDate(userDetail.getHireDate());
-	  user.setUserNum(userNum);
-	  user.setProfile(userDetail.getProfile());
-	  user.setPhoto(downloadURL);
-	  
-	  userService.insertUser(user);
+    System.out.println("アップデート=" + userNum);
+    System.out.println("photo=" + downloadURL);
+
+    User userDetail = userService.findByUserId(userNum);
+
+    User user = new User();
+    user.setUserId(userDetail.getUserId());
+    user.setDepName(userDetail.getDepName());
+    user.setHireDate(userDetail.getHireDate());
+    user.setUserNum(userNum);
+    user.setProfile(userDetail.getProfile());
+    user.setPhoto(downloadURL);
+
+    userService.insertUser(user);
   }
-  
 
   // @RequestMapping(path = "/postform", method = RequestMethod.GET)
   @GetMapping("/postform")
