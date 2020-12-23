@@ -26,7 +26,7 @@ public class GroupMember {
     private Long groupId;
 
     /** 参加者（あるいは招待されてるユーザー）のFirebaseID */
-    @Column(name = "user_num", columnDefinition = "VARCHAR(45)")
+    @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
     private String userNum;
 
     /** ユーザーの参加状況（１：参加済, ２：招待済） */
