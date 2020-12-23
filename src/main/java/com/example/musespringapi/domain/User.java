@@ -43,7 +43,6 @@ public class User {
     @Column(name = "hire_date", columnDefinition = "DATE")
     private Date hireDate;
 
-     
 
     // /** ポストテーブルとの結合 */
     // @OneToMany(mappedBy = "music")

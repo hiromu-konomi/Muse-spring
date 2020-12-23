@@ -77,26 +77,6 @@ public class UserController {
     return userList;
   }
 
-  // ユーザー情報をアップデート
-  @PutMapping("/userDetail/{userNum}")
-  public void updateUserDetail(@PathVariable String userNum, String downloadURL) {
-
-	  System.out.println("アップデート="+userNum);
-	  System.out.println("photo="+downloadURL);
-	  
-	  User userDetail = userService.findByUserId(userNum);
-	  
-	  User user = new User();
-	  user.setUserId(userDetail.getUserId());
-	  user.setDepName(userDetail.getDepName());
-	  user.setHireDate(userDetail.getHireDate());
-	  user.setUserNum(userNum);
-	  user.setProfile(userDetail.getProfile());
-
-	  
-	  userService.insertUser(user);
-  }
-
   // @RequestMapping(path = "/postform", method = RequestMethod.GET)
   @GetMapping("/postform")
   public String show(String userNum) {
