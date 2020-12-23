@@ -45,9 +45,9 @@ public class User {
     @Column(name = "hire_date", columnDefinition = "DATE")
     private Date hireDate;
     
-   /** 画像　*/
-    @Column(name = "photo", columnDefinition = "MEDIUMTEXT)")
-    private String photo;
+//   /** 画像　*/
+//    @Column(name = "photo", columnDefinition = "MEDIUMTEXT)")
+//    private String photo;
      
 
     // /** ポストテーブルとの結合 */
