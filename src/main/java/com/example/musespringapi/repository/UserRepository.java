@@ -32,4 +32,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(value = "SELECT * FROM `users` WHERE `user_num` = ?1 AND `user_name` LIKE %?2%", nativeQuery = true)
 	User findByUserNumAndSearchWord(String userNum, String searchWord);
 
+	@Query(value = "SELECT * FROM `users` WHERE `user_name` LIKE %?1%", nativeQuery = true)
+	List<User> findUserByUserNameStartsWith(String userName);
+
 }
