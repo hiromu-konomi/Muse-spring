@@ -19,7 +19,7 @@ public interface MusicRepository extends JpaRepository<Music, Integer> {
     Music getMusicInfo(Integer postId);
 
     // musicNameをもとにmusicId,MusicName,artistNameを検索
-    @Query(value = "SELECT * FROM `musics` WHERE `artist_name` LIKE %?1%", nativeQuery = true)
+    @Query(value = "SELECT * FROM `musics` WHERE `artist_name` LIKE %?1% OR `music_name` LIKE %?1%", nativeQuery = true)
     List<Music> findByArtistNameStartsWith(String searchPost);
 
     @Modifying
@@ -28,5 +28,4 @@ public interface MusicRepository extends JpaRepository<Music, Integer> {
     void deleteMusic(Integer postId);
 
     List<Music> findByMusicId(Integer musicId);
-    
 }
