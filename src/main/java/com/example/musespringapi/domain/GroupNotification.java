@@ -13,14 +13,20 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name="`notification_parents`")
-public class NotificationParents {
+@Table(name = "group_notification")
+public class GroupNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer notificationParentsId;
+    private Integer groupNotificationId;
 
-    @Column(name = "type_number")
-    private Integer typeNumber;
+    @Column(name = "group_transfer", columnDefinition = "VARCHAR(225)")
+    private String groupTransfer;
+
+    @Column(name = "group_receiver", columnDefinition = "VARCHAR(225)")
+    private String groupReceiver;
+
+    @Column(name = "group_id")
+    private Long groupId;
 
 }
