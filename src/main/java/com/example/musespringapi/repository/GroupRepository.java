@@ -47,4 +47,8 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Transactional
     @Query(value = "DELETE FROM `group_member` WHERE `group_id` = ?1 AND `user_num` = ?2", nativeQuery = true)
     void deleteJoinGroup(Long groupId, String userNum);
+
+    @Query(value = "SELECT * FROM `groups` WHERE `group_name` LIKE %?1%", nativeQuery = true)
+    List<Group> findGroupsByGroupNameStartsWith(String groupName);
+
 }
