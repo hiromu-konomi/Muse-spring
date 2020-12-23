@@ -42,4 +42,17 @@ public class GroupService {
     public Group findByIdAndSearchWord(Long groupId, String searchWord) {
         return groupRepository.findByIdAndName(groupId, searchWord);
     }
+
+    public void deleteGroups(Long groupId) {
+        groupRepository.deleteGroups(groupId);
+    }
+
+    public void deleteGroupMember(Long groupId) {
+        groupRepository.deleteGroupMember(groupId);
+    }
+
+    public void deleteJoinGroup(Long groupId, String userNum){
+        groupRepository.deleteJoinGroup(groupId, userNum);
+    }
+
 }
