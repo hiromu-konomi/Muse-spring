@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface LikeRepository extends JpaRepository<Like, Integer> {
 	
 	List<Like> findByUserNum(String userNum);
+	
 
     @Modifying
     @Transactional
