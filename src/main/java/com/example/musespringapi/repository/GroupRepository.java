@@ -2,9 +2,12 @@ package com.example.musespringapi.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.example.musespringapi.domain.Group;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +29,22 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     // 参加しているグループ一覧をグループのIDと検索ワードをもとに一件かnullを取得する
     @Query(value = "SELECT * FROM `groups` WHERE `group_id` = ?1 AND `group_name` LIKE %?2%", nativeQuery = true)
     Group findByIdAndName(Long groupId, String searchWord);
+
+    //グループを削除する
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `groups` WHERE `group_id` = ?1", nativeQuery = true)
+    void deleteGroups(Long groupId);
+
+    //グループメンバーを削除
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `group_member` WHERE `group_id` = ?1", nativeQuery = true)
+    void deleteGroupMember(Long groupId);
+
+    //自分が参加してるグループを抜ける
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `group_member` WHERE `group_id` = ?1 AND `user_num` = ?2", nativeQuery = true)
+    void deleteJoinGroup(Long groupId, String userNum);
 }
