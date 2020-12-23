@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.example.musespringapi.domain.FollowUserGrpSts;
 import com.example.musespringapi.domain.Group;
+import com.example.musespringapi.domain.GroupChat;
 import com.example.musespringapi.domain.GroupMember;
 import com.example.musespringapi.domain.GroupNotification;
 import com.example.musespringapi.domain.JoinGroup;
@@ -13,10 +14,12 @@ import com.example.musespringapi.domain.OwnerGroup;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.request.InviteGroupRequest;
 import com.example.musespringapi.response.FollowUsersGrpStsResponse;
+import com.example.musespringapi.response.GroupChatResponse;
 import com.example.musespringapi.response.GroupMemberResponse;
 import com.example.musespringapi.response.GroupResponse;
 import com.example.musespringapi.response.JoinGroupResponse;
 import com.example.musespringapi.response.OwnerGroupResponse;
+import com.example.musespringapi.service.GroupChatService;
 import com.example.musespringapi.service.GroupMemberService;
 import com.example.musespringapi.service.GroupService;
 import com.example.musespringapi.service.NotificationService;
@@ -41,6 +44,7 @@ public class GroupRestController {
     private final RelationService relationService;
     private final UserService userService;
     private final NotificationService notificationService;
+    private final GroupChatService groupChatService;
 
     // グループを新規作成した際に GET されるメソッド
     @RequestMapping(value = "/createGroup", method = RequestMethod.GET)
@@ -328,12 +332,30 @@ public class GroupRestController {
         }
     }
 
+    // チャット画面でメッセージが送信された際に POST されるメソッド
+    @RequestMapping(value = "/addMessage", method = RequestMethod.POST)
+    public void addMessage(@RequestBody GroupChat request) {
+
+        // group_chatsテーブルにINSERT        
+         groupChatService.save(request);
+    }
+
+    // チャット画面でメッセージを全て表示する際に GET されるメソッド
+    @RequestMapping(value = "/showChats", method = RequestMethod.GET)
+    public ResponseEntity<GroupChatResponse> showChats(Long groupId){
+
+        List<GroupChat> groupChats = groupChatService.findByGroupId(groupId);
+
+        GroupChatResponse response = GroupChatResponse.builder().groupChats(groupChats).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+  
     // Groupと参加者を削除するメソッド
     @RequestMapping(value = "/deleteGroups", method = RequestMethod.GET)
     public void deleteGroups(Long groupId) {
-        System.out.println("groId="+groupId);
-    groupService.deleteGroups(groupId);
-    groupService.deleteGroupMember(groupId);
+      groupService.deleteGroups(groupId);
+      groupService.deleteGroupMember(groupId);
     }
 
     @RequestMapping(value = "/deleteJoinGroups", method = RequestMethod.GET)
