@@ -327,4 +327,17 @@ public class GroupRestController {
             groupMemberService.save(gm);
         }
     }
+
+    // Groupと参加者を削除するメソッド
+    @RequestMapping(value = "/deleteGroups", method = RequestMethod.GET)
+    public void deleteGroups(Long groupId) {
+        System.out.println("groId="+groupId);
+    groupService.deleteGroups(groupId);
+    groupService.deleteGroupMember(groupId);
+    }
+
+    @RequestMapping(value = "/deleteJoinGroups", method = RequestMethod.GET)
+    public void deleteJoinGroup(Long groupId, String userNum){
+        groupService.deleteJoinGroup(groupId, userNum);
+    }
 }
