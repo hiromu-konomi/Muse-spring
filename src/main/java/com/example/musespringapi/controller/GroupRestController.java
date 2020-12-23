@@ -350,4 +350,16 @@ public class GroupRestController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+  
+    // Groupと参加者を削除するメソッド
+    @RequestMapping(value = "/deleteGroups", method = RequestMethod.GET)
+    public void deleteGroups(Long groupId) {
+      groupService.deleteGroups(groupId);
+      groupService.deleteGroupMember(groupId);
+    }
+
+    @RequestMapping(value = "/deleteJoinGroups", method = RequestMethod.GET)
+    public void deleteJoinGroup(Long groupId, String userNum){
+        groupService.deleteJoinGroup(groupId, userNum);
+    }
 }
