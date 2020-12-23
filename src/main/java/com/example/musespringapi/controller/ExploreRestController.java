@@ -2,6 +2,8 @@ package com.example.musespringapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.musespringapi.domain.Group;
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.ShowReview;
@@ -11,6 +13,7 @@ import com.example.musespringapi.service.ExploreService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +49,7 @@ public class ExploreRestController {
             User user = exploreService.userNameFindByUserNum(post.getUserNum());
 
             showReview.setUserName(user.getUserName());
+            showReview.setUserNum(user.getUserNum());
 
             exploreList.add(showReview);
 
@@ -58,6 +62,20 @@ public class ExploreRestController {
         // System.out.println(musicForExploreResponse.getExploreList().get(0).getArtistName());
         return new ResponseEntity<>(musicForExploreResponse, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/searchUsers")
+    public List<User> exploreUserFromUserName(String searchUser){
+
+        List<User> userListFromExplore = exploreService.findUserByUserNameStartsWith(searchUser);
+        return userListFromExplore;
+    }
+
+    @GetMapping("/searchGroups")
+    public List<Group> exploreGroupFromGroupName(String searchGroup){
+
+        List<Group> exploreGroupFromGroupName = exploreService.findGroupsByGroupNameStartsWith(searchGroup);
+        return exploreGroupFromGroupName;
     }
 
 }
