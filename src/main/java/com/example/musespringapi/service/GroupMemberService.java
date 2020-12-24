@@ -19,10 +19,6 @@ public class GroupMemberService {
         groupMemberRepository.save(groupMember);
     }
 
-    public Integer countMember(Long groupId) {
-        return groupMemberRepository.countMemberFindByGroupId(groupId);
-    }
-
     // ユーザーのグループ参加状況を取得するメソッド
     public Integer getJoinStatus(String userNum, Long groupId) {
         return groupMemberRepository.statusFindbyUserNumAndGroupId(userNum, groupId);
