@@ -3,13 +3,17 @@ package com.example.musespringapi.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.musespringapi.domain.Check;
 import com.example.musespringapi.domain.Group;
+import com.example.musespringapi.domain.Like;
 import com.example.musespringapi.domain.Music;
 import com.example.musespringapi.domain.Post;
 import com.example.musespringapi.domain.ShowReview;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.response.MusicForExploreResponse;
+import com.example.musespringapi.service.CheckService;
 import com.example.musespringapi.service.ExploreService;
+import com.example.musespringapi.service.LikeService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class ExploreRestController {
 
     private final ExploreService exploreService;
+    private final LikeService likeService;
+    private final CheckService checkService;
 
     @RequestMapping(value = "/searchPost", method = RequestMethod.GET)
     public ResponseEntity<MusicForExploreResponse> SelectPost(String searchPost) {
@@ -45,21 +51,39 @@ public class ExploreRestController {
             Post post = exploreService.userNumPostTextFindByPostId(music.getPostId());
 
             showReview.setPostText(post.getPostText());
+            showReview.setPostId(post.getPostId());
 
             User user = exploreService.userNameFindByUserNum(post.getUserNum());
 
             showReview.setUserName(user.getUserName());
             showReview.setUserNum(user.getUserNum());
 
+            Like like = likeService.userNumAndPostId(user.getUserNum(), post.getPostId());
+            if (like == null) {
+                showReview.setLikeStatus(false);
+            } else {
+                showReview.setLikeStatus(true);
+            }
+            Integer likeList = likeService.likeList(post.getPostId());
+            showReview.setLikeCount(likeList);
+            // postIdからmusicIdの取得
+            Integer musicId = checkService.getMusicId(post.getPostId());
+            Check check = checkService.checkList(user.getUserNum(), musicId);
+            if (check == null) {
+                showReview.setCheckStatus(false);
+            } else {
+                showReview.setCheckStatus(true);
+            }
+            // musicIdからチェックされた総数を数える
+            Integer countCheck = checkService.checkCount(musicId);
+            showReview.setCheckCount(countCheck);
             exploreList.add(showReview);
-
-            // System.out.println("test");
 
         }
 
         MusicForExploreResponse musicForExploreResponse = MusicForExploreResponse.builder().exploreList(exploreList)
                 .build();
-        // System.out.println(musicForExploreResponse.getExploreList().get(0).getArtistName());
+
         return new ResponseEntity<>(musicForExploreResponse, HttpStatus.OK);
 
     }
