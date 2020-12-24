@@ -67,7 +67,12 @@ public class UserService {
 	}
 
 	public User userName(String userNum) {
-		return userRepository.userNameList(userNum);
+		User user = userRepository.userNameList(userNum);
+		
+		if(user == null) {
+			return null;
+		}
+		return user;
 	}
 
 	//userNumとuserNameの曖昧検索をもとにユーザーを取得
