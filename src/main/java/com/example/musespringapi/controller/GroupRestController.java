@@ -120,10 +120,8 @@ public class GroupRestController {
         for (int j = 0; j < groupList.size(); j++) {
             OwnerGroup group = new OwnerGroup();
             Long groupId = groupList.get(j).getGroupId();
-            Integer countMember = groupMemberService.countMember(groupId);
             String groupName = groupList.get(j).getGroupName();
             group.setGroupId(groupId);
-            group.setCountMember(countMember);
             group.setGroupName(groupName);
             ownerGroups.add(group);
         }
@@ -259,6 +257,7 @@ public class GroupRestController {
             updateMember.setGroupId(groupId);
             updateMember.setUserNum(userNum);
             updateMember.setJoinStatus(1);
+            groupMemberService.save(updateMember);
         }
         // 参加済の画面表示にするため、JoinStatus（１）をreturn
         return 1;
