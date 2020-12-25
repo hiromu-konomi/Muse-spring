@@ -14,13 +14,14 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "musics")
-public class Music  {
-    
+@Table(name = "`musics`")
+public class Music {
+
     /** 自動採番ID */
     @Id
+    @Column(name = "music_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long musicId;
+    private Integer musicId;
 
     /** 曲名 */
     @Column(name = "music_name", columnDefinition = "VARCHAR(45)")
@@ -36,9 +37,11 @@ public class Music  {
 
     /** 曲イメージ画像 */
     @Lob
-    @Column(name = "image", columnDefinition = "BLOB")
-    private byte[] image;
+    @Column(name = "image", columnDefinition = "VARCHAR(225)")
+    private String image;
 
-    /** チェックしたユーザーの配列 */
-    
+    /** postId */
+    @Column(name = "post_id", columnDefinition = "INT")
+    private Integer postId;
+
 }

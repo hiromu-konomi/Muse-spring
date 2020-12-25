@@ -13,25 +13,23 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "`posts`")
-public class Post {
+@Table(name = "`group_member`")
+public class GroupMember {
 
     /** 自動採番ID */
     @Id
-    @Column(name = "post_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer postId;
+    private Long groupMemberId;
 
-    /** ユーザーID */
+    /** グループID */
+    @Column(name = "group_id", columnDefinition = "INT")
+    private Long groupId;
+
+    /** 参加者（あるいは招待されてるユーザー）のFirebaseID */
     @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
     private String userNum;
 
-    // /** ミュージックID */
-    // @Column(name = "music_id", columnDefinition = "INT")
-    // private Integer musicID;
-
-    /** 投稿テキスト */
-    @Column(name = "post_text", columnDefinition = "VARCHAR(255)")
-    private String postText;
-
+    /** ユーザーの参加状況（１：参加済, ２：招待済） */
+    @Column(name = "join_status", columnDefinition = "INT")
+    private Integer joinStatus;
 }

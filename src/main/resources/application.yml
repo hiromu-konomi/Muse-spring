@@ -1,9 +1,9 @@
 spring:
   datasource:
     sql-script-encoding: UTF-8
-    url: jdbc:mysql://localhost:3306/muse_db?serverTimezone=JST
+    url: jdbc:mysql://musedb.c1fhs5lzkrir.ap-northeast-1.rds.amazonaws.com:3306/muse_db?serverTimezone=JST
     username: root
-    password: root
+    password: muse1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: MYSQL

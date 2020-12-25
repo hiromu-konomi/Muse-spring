@@ -13,25 +13,21 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "`posts`")
-public class Post {
+@Table(name = "`likes`")
+
+public class Like {
 
     /** 自動採番ID */
     @Id
-    @Column(name = "post_id", columnDefinition = "INT")
+    @Column(name = "like_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer postId;
+    private Integer likeId;
 
-    /** ユーザーID */
+    /** userNum */
     @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
     private String userNum;
 
-    // /** ミュージックID */
-    // @Column(name = "music_id", columnDefinition = "INT")
-    // private Integer musicID;
-
-    /** 投稿テキスト */
-    @Column(name = "post_text", columnDefinition = "VARCHAR(255)")
-    private String postText;
-
+    /** postId */
+    @Column(name = "post_id", columnDefinition = "INT")
+    private Integer postId;
 }

@@ -13,25 +13,27 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "`posts`")
-public class Post {
-
+@Table(name = "group_chats")
+public class GroupChat {
+    
     /** 自動採番ID */
     @Id
-    @Column(name = "post_id", columnDefinition = "INT")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer postId;
+    private Long groupChatId;
+    
+    /** グループID */
+    @Column(name = "group_id", columnDefinition = "INT")
+    private Long groupId;
 
     /** ユーザーID */
     @Column(name = "user_num", columnDefinition = "VARCHAR(225)")
     private String userNum;
 
-    // /** ミュージックID */
-    // @Column(name = "music_id", columnDefinition = "INT")
-    // private Integer musicID;
+    /** 送信時の日時 */
+    @Column(name = "submit_time", columnDefinition = "VARCHAR(225)")
+    private String submitTime;
 
-    /** 投稿テキスト */
-    @Column(name = "post_text", columnDefinition = "VARCHAR(255)")
-    private String postText;
-
+    /** メッセージ内容 */
+    @Column(name = "chat_text", columnDefinition = "VARCHAR(225)")
+    private String chatText;
 }
