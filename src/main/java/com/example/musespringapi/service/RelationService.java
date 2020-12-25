@@ -6,7 +6,6 @@ import com.example.musespringapi.domain.Relation;
 import com.example.musespringapi.domain.User;
 import com.example.musespringapi.repository.RelationRepository;
 import com.example.musespringapi.repository.UserRepository;
-import com.example.musespringapi.response.followUserResponse;
 
 import org.springframework.stereotype.Service;
 
@@ -24,20 +23,11 @@ public class RelationService {
         return relationRepository.getFollowerUserNum(userNum);
     }
 
-
-    // public List<Integer> getPostIdFromFollowingUser(String followingUser) {
-    // return relationRepository.getPostIdFromFollowingUser(followingUser);
-    // }
-
     //フォロしたらそれぞれにユーザーIDをインサート
     public void insertFollowUser(Relation relation) {
     	
     	relationRepository.save(relation);
     }
-    
-//    public List<Relation> getFollowerUserNum (String followingUserNum){
-//    	return relationRepository.findByFollowingUserNum(followingUserNum);
-//    }
     
     public void deleteFollowUser(String followingUserNum, String followerUserNum) {
     	relationRepository.DeleteFollowUser(followingUserNum, followerUserNum);
@@ -72,13 +62,5 @@ public class RelationService {
     	
     	return followerUserNumList;
     }
-    
-//    public Relation findByFollowingUserNumAndFollowerUserNum(String followingUserNum, String followerUserNum){
-//    	Relation relation = relationRepository.findByFollowingUserNumAndFollowerUserNum(followingUserNum, followerUserNum);
-//    	if(relation == null) {
-//    		return null;
-//    	}
-//    	return relation;
-//    }
     
 }
